@@ -1,3 +1,4 @@
+mafredri/zsh-async
 sindresorhus/pure
 
 ohmyzsh/ohmyzsh path:lib
