@@ -8,6 +8,9 @@ ANTIDOTE_DIR="$TOOLS_DIR/antidote"
 ANTIDOTE_INIT="$ANTIDOTE_DIR/antidote.zsh"
 QUOTES_ROOT="$HOME/.quotes"
 
+# set up completions
+autoload -Uz compinit && compinit
+
 # aliases & functions
 alias ls='ls --color=auto'
 
