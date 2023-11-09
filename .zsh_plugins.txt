@@ -1,0 +1,8 @@
+marlonrichert/zsh-autocomplete kind:defer
+sindresorhus/pure
+zsh-users/zsh-autosuggestions kind:defer
+
+ohmyzsh/ohmyzsh path:lib
+ohmyzsh/ohmyzsh path:plugins/git
+
+zsh-users/zsh-syntax-highlighting kind:defer
