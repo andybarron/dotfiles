@@ -8,6 +8,38 @@ ANTIDOTE_DIR="$TOOLS_DIR/antidote"
 ANTIDOTE_INIT="$ANTIDOTE_DIR/antidote.zsh"
 QUOTES_ROOT="$HOME/.quotes"
 
+# quote of the day :)
+
+
+if command -v fortune &> /dev/null; then
+  quote_path() {
+    local quote_dir="$QUOTES_ROOT/$(date +"%Y/%m/%d")"
+    mkdir -p "$quote_dir"
+    echo "$quote_dir/quote.txt"
+  }
+
+  quote() {
+    local current_path=$(quote_path)
+    if [[ ! -f "$current_path" ]]; then
+      fortune -s > "$current_path"
+    fi
+
+    if command -v lolcat &> /dev/null; then
+      cat "$current_path" | lolcat
+    else
+      cat "$current_path"
+    fi
+  }
+
+  requote() {
+    rm -f "$(quote_path)"
+    quote
+  }
+
+  # [[ -f $(quote_path) ]] || quote
+  quote
+fi
+
 # set up completions
 autoload -Uz compinit && compinit
 
@@ -49,31 +81,6 @@ eval "$(zoxide init zsh)"
 # fun stuff
 if command -v thefuck &> /dev/null; then
   eval $(thefuck --alias)
-fi
-
-if command -v fortune &> /dev/null; then
-  quote_path() {
-    local quote_dir="$QUOTES_ROOT/$(date +"%Y/%m/%d")"
-    mkdir -p "$quote_dir"
-    echo "$quote_dir/quote.txt"
-  }
-
-  quote() {
-    local current_path=$(quote_path)
-    if [[ ! -f "$current_path" ]]; then
-      fortune -s computers food linux love wisdom > "$current_path"
-    fi
-
-    if command -v lolcat &> /dev/null; then
-      cat "$current_path" | lolcat
-    else
-      cat "$current_path"
-    fi
-  }
-
-  if [[ ! -f $(quote_path) ]]; then
-    quote
-  fi
 fi
 
 # aliases & functions
