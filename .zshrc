@@ -1,3 +1,6 @@
+# new machine setup:
+# yadm clone git@github.com:andybarron/dotfiles.git
+
 TOOLS_DIR="$HOME/tools"
 ASDF_DIR="$TOOLS_DIR/asdf"
 ASDF_INIT="$ASDF_DIR/asdf.sh"
