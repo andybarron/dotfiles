@@ -11,9 +11,6 @@ QUOTES_ROOT="$HOME/.quotes"
 # set up completions
 autoload -Uz compinit && compinit
 
-# aliases & functions
-alias ls='ls --color=auto'
-
 # update PATH for local binaries
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -78,3 +75,7 @@ if command -v fortune &> /dev/null; then
     quote
   fi
 fi
+
+# aliases & functions
+alias ls='ls --color=auto'
+alias k='k -h'
