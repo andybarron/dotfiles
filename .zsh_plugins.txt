@@ -1,6 +1,7 @@
 sindresorhus/pure
 
 ohmyzsh/ohmyzsh path:lib
+ohmyzsh/ohmyzsh path:plugins/fzf
 ohmyzsh/ohmyzsh path:plugins/git
 
 marlonrichert/zsh-autocomplete kind:defer
