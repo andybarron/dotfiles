@@ -43,6 +43,12 @@ fi
 source "$ANTIDOTE_INIT"
 antidote load "$ANTIDOTE_PLUGINS_FILE"
 
+# init/install tools
+if ! command -v zoxide &> /dev/null; then
+  curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+fi
+eval "$(zoxide init zsh)"
+
 # fun stuff
 if command -v thefuck &> /dev/null; then
   eval $(thefuck --alias)
