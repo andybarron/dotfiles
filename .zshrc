@@ -24,8 +24,8 @@ if command -v fortune &> /dev/null; then
     fi
 
     command -v lolcat &> /dev/null && lolcat_cmd="lolcat" || lolcat_cmd="cat"
-    command -v cowthink &> /dev/null && cowthink_cmd="cowthink -f small -e 'Oo'" || cowthink_cmd="cat"
-    cat "$current_path" | eval $cowthink_cmd | eval $lolcat_cmd
+    command -v cowthink &> /dev/null && cow_cmd="cowthink -f ~/.fun/grogu.cow" || cow_cmd="cat"
+    cat "$current_path" | eval $cow_cmd | eval $lolcat_cmd
   }
 
   requote() {
@@ -33,8 +33,7 @@ if command -v fortune &> /dev/null; then
     quote
   }
 
-  # [[ -f $(quote_path) ]] || quote
-  quote
+  [[ -f $(quote_path) ]] || quote
 fi
 
 # track things to install
