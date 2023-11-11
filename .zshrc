@@ -10,7 +10,6 @@ VIM_PLUG="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim
 QUOTES_ROOT="$HOME/.quotes"
 
 # quote of the day :)
-
 if command -v fortune &> /dev/null; then
   quote_path() {
     local quote_dir="$QUOTES_ROOT/$(date +"%Y/%m/%d")"
@@ -68,7 +67,8 @@ autoload -Uz compinit && compinit
 # update PATH for local binaries
 export PATH="$HOME/.local/bin:$PATH"
 
-# update fpath for zsh completions
+# set up zsh completions
+mkdir -p ~/.zfunc
 fpath+=~/.zfunc
 
 # set up directories
