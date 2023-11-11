@@ -24,11 +24,9 @@ if command -v fortune &> /dev/null; then
       fortune -s > "$current_path"
     fi
 
-    if command -v lolcat &> /dev/null; then
-      cat "$current_path" | lolcat
-    else
-      cat "$current_path"
-    fi
+    command -v lolcat &> /dev/null && lolcat_cmd="lolcat" || lolcat_cmd="cat"
+    command -v cowthink &> /dev/null && cowthink_cmd="cowthink -f small -e 'Oo'" || cowthink_cmd="cat"
+    cat "$current_path" | eval $cowthink_cmd | eval $lolcat_cmd
   }
 
   requote() {
