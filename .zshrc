@@ -1,7 +1,5 @@
-# new machine setup:
-# yadm clone --recurse-submodules git@github.com:andybarron/dotfiles.git && exec $SHELL
-
 # TODO: nerd font repo in .tool-repos
+# TODO: vim-plug -> vim 8 packages
 
 TOOLS_DIR="$HOME/.tool-repos"
 ASDF_DIR="$TOOLS_DIR/asdf"
@@ -121,3 +119,5 @@ fi
 
 # aliases
 alias ls='\ls --color=auto'
+alias dotfiles='GIT_DIR=$HOME/.dotfiles GIT_WORK_TREE=$HOME'
+alias dtf='dotfiles'
