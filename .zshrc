@@ -1,11 +1,13 @@
 # new machine setup:
 # yadm clone --recurse-submodules git@github.com:andybarron/dotfiles.git && exec $SHELL
 
+# TODO: nerd font repo in .tool-repos
+
 TOOLS_DIR="$HOME/.tool-repos"
 ASDF_DIR="$TOOLS_DIR/asdf"
 ASDF_INIT="$ASDF_DIR/asdf.sh"
 ANTIDOTE_INIT="$TOOLS_DIR/antidote/antidote.zsh"
-VIM_PLUG="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim
+VIM_PLUG="$HOME/.local/share/nvim/site/autoload/plug.vim"
 QUOTES_ROOT="$HOME/.quotes"
 
 # update PATH for local binaries e.g. pip installs
@@ -43,7 +45,7 @@ if command -v fortune &> /dev/null; then
 fi
 
 # track things to install
-desired_tools=(fzf nvim thefuck)
+desired_tools=(fzf nvim thefuck lsd)
 missing_tools=()
 
 for tool in "${desired_tools[@]}"; do
@@ -95,5 +97,27 @@ if command -v thefuck &> /dev/null; then
   eval $(thefuck --alias)
 fi
 
-# aliases & functions
+# set up lsd
+if command -v lsd &> /dev/null; then
+  alias l='\lsd --date=relative'
+
+  alias la='l -A'
+  alias ll='l -l'
+  alias lt='l --tree'
+
+  alias lal='l -Al'
+  alias lat='l -A --tree'
+  alias llt='l -l --tree'
+
+  alias lalt='l -Al --tree'
+else
+  alias l='\ls -h'
+
+  alias la='l -A'
+  alias ll='l -l'
+
+  alias lal='l -Al'
+fi
+
+# aliases
 alias ls='\ls --color=auto'

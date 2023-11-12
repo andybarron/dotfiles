@@ -4,7 +4,7 @@ window:
   option_as_alt: Both
 font:
   normal:
-    family: Hack
+    family: Hack Nerd Font
   size: 12.0
 
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
