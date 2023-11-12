@@ -120,4 +120,6 @@ fi
 # aliases
 alias ls='\ls --color=auto'
 alias dotfiles='GIT_DIR=$HOME/.dotfiles GIT_WORK_TREE=$HOME'
+alias undotfiles='unset GIT_DIR GIT_WORK_TREE'
 alias dtf='dotfiles'
+alias undtf='undotfiles'
