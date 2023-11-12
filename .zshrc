@@ -97,4 +97,3 @@ fi
 
 # aliases & functions
 alias ls='\ls --color=auto'
-alias k='\k -h'

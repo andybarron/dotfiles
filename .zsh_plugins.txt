@@ -7,7 +7,6 @@ ohmyzsh/ohmyzsh path:plugins/git
 
 marlonrichert/zsh-autocomplete kind:defer
 zsh-users/zsh-autosuggestions kind:defer
-supercrabtree/k
 
 # must be last and not deferred
 zsh-users/zsh-syntax-highlighting
