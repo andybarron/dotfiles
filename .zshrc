@@ -1,23 +1,19 @@
 # new machine setup:
-# yadm clone git@github.com:andybarron/dotfiles.git
+# yadm clone --recurse-submodules git@github.com:andybarron/dotfiles.git && exec $SHELL
 
 TOOLS_DIR="$HOME/.tool-repos"
 ASDF_DIR="$TOOLS_DIR/asdf"
 ASDF_INIT="$ASDF_DIR/asdf.sh"
-ANTIDOTE_DIR="$TOOLS_DIR/antidote"
-ANTIDOTE_INIT="$ANTIDOTE_DIR/antidote.zsh"
+ANTIDOTE_INIT="$TOOLS_DIR/antidote/antidote.zsh"
 VIM_PLUG="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim
 QUOTES_ROOT="$HOME/.quotes"
 
-# update PATH for local binaries
+# update PATH for local binaries e.g. pip installs
 export PATH="$HOME/.local/bin:$PATH"
 
 # set up zsh completions
 mkdir -p ~/.zfunc
 fpath+=~/.zfunc
-
-# set up directories
-mkdir -p "$TOOLS_DIR"
 
 # quote of the day :)
 if command -v fortune &> /dev/null; then
@@ -47,7 +43,7 @@ if command -v fortune &> /dev/null; then
 fi
 
 # track things to install
-desired_tools=(fzf nvim thefuck yadm)
+desired_tools=(fzf nvim thefuck)
 missing_tools=()
 
 for tool in "${desired_tools[@]}"; do
@@ -68,28 +64,17 @@ if command -v nvim &> /dev/null; then
   alias vi=nvim
 else
   export EDITOR=vim
+  alias vi=vim
 fi
 
 # set up completions
 autoload -Uz compinit && compinit
 
-# install asdf version manager
-if [[ ! -f "$ASDF_INIT" ]]; then
-  echo "downloading asdf"
-  git clone --quiet --depth=1 https://github.com/asdf-vm/asdf.git "$ASDF_DIR"
-fi
-
-# set up asdf
+# set up asdf tool version manager
 source "$ASDF_INIT"
 fpath+="$ASDF_DIR/completions"
 
-# install zsh plugin manager
-if [[ ! -f "$ANTIDOTE_INIT" ]]; then
-  echo "downloading antidote"
-  git clone --quiet --depth=1 https://github.com/mattmc3/antidote.git "$ANTIDOTE_DIR"
-fi
-
-# set up zsh plugins
+# set up antidote zsh plugin manager
 source "$ANTIDOTE_INIT"
 antidote load "$ANTIDOTE_PLUGINS_FILE"
 
