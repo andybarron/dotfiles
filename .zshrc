@@ -96,5 +96,5 @@ if command -v thefuck &> /dev/null; then
 fi
 
 # aliases & functions
-alias ls='ls --color=auto'
-alias k='k -h'
+alias ls='\ls --color=auto'
+alias k='\k -h'
