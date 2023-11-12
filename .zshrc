@@ -1,7 +1,7 @@
 # new machine setup:
 # yadm clone git@github.com:andybarron/dotfiles.git
 
-TOOLS_DIR="$HOME/.ztools"
+TOOLS_DIR="$HOME/.tool-repos"
 ASDF_DIR="$TOOLS_DIR/asdf"
 ASDF_INIT="$ASDF_DIR/asdf.sh"
 ANTIDOTE_DIR="$TOOLS_DIR/antidote"
@@ -105,6 +105,7 @@ if ! command -v zoxide &> /dev/null; then
 fi
 eval "$(zoxide init zsh)"
 
+# set up thefuck
 if command -v thefuck &> /dev/null; then
   eval $(thefuck --alias)
 fi
