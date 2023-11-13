@@ -5,7 +5,7 @@ mafredri/zsh-async
 sindresorhus/pure kind:fpath # must be after zsh-async
 zsh-users/zsh-autosuggestions # inline suggestions
 marlonrichert/zsh-autocomplete # interactive completions
-ohmyzsh/ohmyzsh path:lib # must be before other ohmyzsh plugins
-ohmyzsh/ohmyzsh path:plugins/fzf
+ohmyzsh/ohmyzsh path:plugins/fzf # must be after zsh-autocomplete
+ohmyzsh/ohmyzsh path:lib/git.zsh # must be before ohmyzsh git plugin
 ohmyzsh/ohmyzsh path:plugins/git # must be after zsh-autocomplete (compinit)
 zsh-users/zsh-syntax-highlighting # must be last and not deferred
