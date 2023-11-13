@@ -1,117 +1,113 @@
-# TODO: nerd font repo in .tool-repos
+# TODO: nerd font repo
+function() {
+  ROOT="$HOME/.tools"
+  REPOS="$ROOT/repos"
+  REPO="$ROOT/.repo"
+  QUOTES="$ROOT/.quotes"
 
-TOOLS_DIR="$HOME/.tool-repos"
-ASDF_DIR="$TOOLS_DIR/asdf"
-ASDF_INIT="$ASDF_DIR/asdf.sh"
-ANTIDOTE_INIT="$TOOLS_DIR/antidote/antidote.zsh"
-QUOTES_ROOT="$HOME/.quotes"
+  # update PATH for local binaries e.g. pip installs
+  export PATH="$HOME/.local/bin:$PATH"
 
-# update PATH for local binaries e.g. pip installs
-export PATH="$HOME/.local/bin:$PATH"
+  # configure default editor
+  export VISUAL='vi'
 
-# set up zsh completions
-mkdir -p ~/.zfunc
-fpath+=~/.zfunc
-
-# quote of the day :)
-if command -v fortune &> /dev/null; then
-  quote_path() {
-    local quote_dir="$QUOTES_ROOT/$(date +"%Y/%m/%d")"
-    mkdir -p "$quote_dir"
-    echo "$quote_dir/quote.txt"
+  # utility functions
+  function warn() {
+    echo -e "\033[33m[WARN] $@\033[0m"
   }
 
-  quote() {
-    local current_path=$(quote_path)
-    if [[ ! -f "$current_path" ]]; then
-      fortune -s > "$current_path"
-    fi
+  # quote of the day!
+  if command -v fortune &> /dev/null; then
+    quote_path() {
+      local quote_dir="$QUOTES/$(date +"%Y/%m/%d")"
+      mkdir -p "$quote_dir"
+      echo "$quote_dir/quote.txt"
+    }
 
-    command -v lolcat &> /dev/null && lolcat_cmd="lolcat" || lolcat_cmd="cat"
-    command -v cowthink &> /dev/null && cow_cmd="cowthink -f ~/.fun/grogu.cow" || cow_cmd="cat"
-    cat "$current_path" | eval $cow_cmd | eval $lolcat_cmd
-  }
+    quote() {
+      local current_path=$(quote_path)
+      if [[ ! -f "$current_path" ]]; then
+        fortune -s > "$current_path"
+      fi
 
-  requote() {
-    rm -f "$(quote_path)"
-    quote
-  }
+      command -v lolcat &> /dev/null && lolcat_cmd="lolcat" || lolcat_cmd="cat"
+      command -v cowthink &> /dev/null && cow_cmd="cowthink -f ~/.fun/grogu.cow" || cow_cmd="cat"
+      cat "$current_path" | eval $cow_cmd | eval $lolcat_cmd
+    }
 
-  [[ -f $(quote_path) ]] || quote
-fi
+    requote() {
+      rm -f "$(quote_path)"
+      quote
+    }
 
-# track things to install
-desired_tools=(fzf nvim thefuck lsd)
-missing_tools=()
-
-for tool in "${desired_tools[@]}"; do
-  if ! command -v "$tool" &> /dev/null; then
-    missing_tools+=("$tool")
+    [[ -f $(quote_path) ]] || quote
   fi
-done
 
-# alert on missing tools
-if [[ ${#missing_tools[@]} -ne 0 ]]; then
-  echo -e "\n\033[33mThe following commands are missing: ${missing_tools[*]}\033[0m"
-fi
+  # set up antidote (zsh plugin manager)
+  zstyle ':antidote:bundle' use-friendly-names 'yes'
+  source "$REPOS/antidote/antidote.zsh"
+  antidote load
 
-# set up editor prefs
-if command -v nvim &> /dev/null; then
-  export EDITOR=nvim
-  alias vim=nvim
-  alias vi=nvim
-else
-  export EDITOR=vim
-  alias vi=vim
-fi
+  # set prompt
+  autoload -Uz promptinit && promptinit && prompt pure
 
-# set up completions
-autoload -Uz compinit && compinit
+  # track missing commands for warning
+  missing_commands=()
 
-# set up asdf tool version manager
-source "$ASDF_INIT"
-fpath+="$ASDF_DIR/completions"
+  # set up zsh completions
+  mkdir -p ~/.zfunc
+  fpath+=~/.zfunc
+  # TODO: cargo, rustup completions
 
-# set up antidote zsh plugin manager
-source "$ANTIDOTE_INIT"
-antidote load "$ANTIDOTE_PLUGINS_FILE"
+  # set up zoxide if found
+  if command -v zoxide &> /dev/null; then
+    eval "$(zoxide init zsh)"
+  else
+    missing_commands+="zoxide"
+  fi
 
-# set up zoxide
-if ! command -v zoxide &> /dev/null; then
-  curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-fi
-eval "$(zoxide init zsh)"
+  # set up thefuck if found
+  if command -v thefuck &> /dev/null; then
+    eval $(thefuck --alias)
+  else
+    missing_commands+='thefuck'
+  fi
 
-# set up thefuck
-if command -v thefuck &> /dev/null; then
-  eval $(thefuck --alias)
-fi
+  # set up lsd if found
+  if command -v lsd &> /dev/null; then
+    alias l='\lsd --date=relative'
+  else
+    missing_commands+='lsd'
+    alias l='\ls -h --color=auto'
+  fi
 
-# set up lsd
-if command -v lsd &> /dev/null; then
-  alias l='\lsd --date=relative'
+  # set up nvim if found
+  if command -v nvim &> /dev/null; then
+    alias vim='\nvim'
+  else
+    missing_commands+='nvim'
+  fi
+  alias vi='vim'
+
+  # aliases: ls/lsd
+  alias ls='\ls --color=auto'
 
   alias la='l -A'
   alias ll='l -l'
   alias lt='l --tree'
-
   alias lal='l -Al'
   alias lat='l -A --tree'
   alias llt='l -l --tree'
-
   alias lalt='l -Al --tree'
-else
-  alias l='\ls -h'
 
-  alias la='l -A'
-  alias ll='l -l'
+  # aliases: dotfile management
+  alias dotfiles="GIT_DIR=$REPO GIT_WORK_TREE=$HOME"
+  alias undotfiles='unset GIT_DIR GIT_WORK_TREE'
+  alias dtf='dotfiles'
+  alias undtf='undotfiles'
 
-  alias lal='l -Al'
-fi
-
-# aliases
-alias ls='\ls --color=auto'
-alias dotfiles='GIT_DIR=$HOME/.dotfiles GIT_WORK_TREE=$HOME'
-alias undotfiles='unset GIT_DIR GIT_WORK_TREE'
-alias dtf='dotfiles'
-alias undtf='undotfiles'
+  # alert on missing commands
+  if [[ ${#missing_commands[@]} -ne 0 ]]; then
+    warn "The following commands were not found: ${missing_commands[*]}"
+  fi
+}

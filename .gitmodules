@@ -1,6 +1,3 @@
-[submodule ".tool-repos/antidote"]
-	path = .tool-repos/antidote
+[submodule ".tools/repos/antidote"]
+	path = .tools/repos/antidote
 	url = https://github.com/mattmc3/antidote.git
-[submodule ".tool-repos/asdf"]
-	path = .tool-repos/asdf
-	url = https://github.com/asdf-vm/asdf.git
