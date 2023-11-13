@@ -4,6 +4,7 @@ function() {
   REPOS="$ROOT/repos"
   REPO="$ROOT/.repo"
   QUOTES="$ROOT/.quotes"
+  FUN="$ROOT/fun"
 
   # update PATH for local binaries e.g. pip installs
   export PATH="$HOME/.local/bin:$PATH"
@@ -31,7 +32,7 @@ function() {
       fi
 
       command -v lolcat &> /dev/null && lolcat_cmd="lolcat" || lolcat_cmd="cat"
-      command -v cowthink &> /dev/null && cow_cmd="cowthink -f ~/.fun/grogu.cow" || cow_cmd="cat"
+      command -v cowthink &> /dev/null && cow_cmd="cowthink -f $FUN/grogu.cow" || cow_cmd="cat"
       cat "$current_path" | eval $cow_cmd | eval $lolcat_cmd
     }
 
