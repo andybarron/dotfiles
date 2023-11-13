@@ -1,8 +1,29 @@
 Adapted from: [atlassian.com/git/tutorials/dotfiles](https://www.atlassian.com/git/tutorials/dotfiles)
 
+## Setup
+
 ```shell
-git clone --mirror git@github.com:andybarron/dotfiles.git $HOME/.tools/.repo
-git --git-dir=$HOME/.tools/.repo config --local status.showUntrackedFiles no
-git --git-dir=$HOME/.tools/.repo --work-tree=$HOME checkout # --force
+# 1. create bare clone of repository:
+git clone --mirror --recurse-submodules git@github.com:andybarron/dotfiles.git $HOME/.tools/.repo
+
+# if SSH or credentials are unavailable, use HTTPS instead:
+# $ git clone --mirror --recurse-submodules https://github.com/andybarron/dotfiles.git $HOME/.tools/.repo
+
+# upgrade to SSH later if needed:
+# $ GIT_DIR=$HOME/.tools/.repo GIT_WORK_TREE=$HOME git remote set-url origin git@github.com:andybarron/dotfiles.git
+
+# 2. disable untracked file listing so git doesn't list everything under $HOME
+GIT_DIR=$HOME/.tools/.repo GIT_WORK_TREE=$HOME git config --local status.showUntrackedFiles no
+
+# 3. create all files
+GIT_DIR=$HOME/.tools/.repo GIT_WORK_TREE=$HOME git checkout
+
+# in case of conflicts (e.g. if .zshrc already exists), overwrite with `--force`:
+# $ GIT_DIR=$HOME/.tools/.repo GIT_WORK_TREE=$HOME git checkout --force
+
+# 4. recursively initialize, fetch, and checkout submodules:
+GIT_DIR=$HOME/.tools/.repo GIT_WORK_TREE=$HOME git -C $HOME submodule update --init --recursive
+
+# 5. let the games begin:
 source $HOME/.zshrc
 ```
