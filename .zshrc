@@ -1,11 +1,9 @@
 # TODO: nerd font repo in .tool-repos
-# TODO: vim-plug -> vim 8 packages
 
 TOOLS_DIR="$HOME/.tool-repos"
 ASDF_DIR="$TOOLS_DIR/asdf"
 ASDF_INIT="$ASDF_DIR/asdf.sh"
 ANTIDOTE_INIT="$TOOLS_DIR/antidote/antidote.zsh"
-VIM_PLUG="$HOME/.local/share/nvim/site/autoload/plug.vim"
 QUOTES_ROOT="$HOME/.quotes"
 
 # update PATH for local binaries e.g. pip installs
@@ -77,12 +75,6 @@ fpath+="$ASDF_DIR/completions"
 # set up antidote zsh plugin manager
 source "$ANTIDOTE_INIT"
 antidote load "$ANTIDOTE_PLUGINS_FILE"
-
-# set up vim-plug
-if [[ ! -f "$VIM_PLUG" ]]; then
-  echo "downloading vim-plug"
-  curl -sSfLo "$VIM_PLUG" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi
 
 # set up zoxide
 if ! command -v zoxide &> /dev/null; then
