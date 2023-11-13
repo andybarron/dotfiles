@@ -16,12 +16,10 @@ function() {
   # configure default editor
   export VISUAL='vi'
 
-  # set up locale if necessary
-  # (fixes pure prompt and probably other things)
+  # super edge case: set up locale if necessary
+  # (fixes pure prompt in docker containers)
   # https://github.com/sindresorhus/pure/issues/561
-  export LC_ALL="${LC_ALL:=en_US.UTF-8}"
-  export LANG="${LANG:=en_US.UTF-8}"
-  export LANGUAGE="${LANGUAGE:=en_US.UTF-8}"
+  export LC_ALL="${LC_ALL:=C.UTF-8}"
 
   # utility functions
   function zshrc__info() {
