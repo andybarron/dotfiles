@@ -19,6 +19,7 @@ function() {
   # super edge case: set up locale if necessary
   # (fixes pure prompt in docker containers)
   # https://github.com/sindresorhus/pure/issues/561
+  # https://unix.stackexchange.com/a/626921
   export LC_ALL="${LC_ALL:=C.UTF-8}"
 
   # utility functions
