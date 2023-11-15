@@ -16,12 +16,6 @@ function() {
   # update PATH for local binaries e.g. pip installs
   export PATH="$HOME/.local/bin:$PATH"
 
-  # super edge case: set up locale if necessary
-  # (fixes pure prompt in docker containers)
-  # https://github.com/sindresorhus/pure/issues/561
-  # https://unix.stackexchange.com/a/626921
-  export LC_ALL="${LC_ALL:=C.UTF-8}"
-
   # utility functions
   function zshrc__info() {
     echo -e "\e[106m\e[30m[warn]\e[m \e[96m$@\e[m"

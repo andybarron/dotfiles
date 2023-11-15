@@ -37,3 +37,4 @@
 ## Links
 
 - [atlassian.com/git/tutorials/dotfiles](https://www.atlassian.com/git/tutorials/dotfiles)
+- [Pure prompt buggy prompt characters](https://github.com/sindresorhus/pure/issues/561)
