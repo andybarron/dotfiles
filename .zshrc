@@ -1,5 +1,6 @@
 setopt interactive_comments
 
+# https://www.danielmoch.com/posts/2018/11/zsh-compinit-rtfm
 # for profiling: un-comment following line, then run zprof
 # zmodload zsh/zprof
 
