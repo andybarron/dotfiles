@@ -4,10 +4,10 @@ Adapted from: [atlassian.com/git/tutorials/dotfiles](https://www.atlassian.com/g
 
 ```shell
 # 1. create bare clone of repository:
-git clone --mirror git@github.com:andybarron/dotfiles.git $HOME/.tools/.repo
+git clone --bare git@github.com:andybarron/dotfiles.git $HOME/.tools/.repo
 
 # if SSH or credentials are unavailable, use HTTPS instead:
-# $ git clone --mirror https://github.com/andybarron/dotfiles.git $HOME/.tools/.repo
+# $ git clone --bare https://github.com/andybarron/dotfiles.git $HOME/.tools/.repo
 
 # upgrade to SSH later if needed:
 # $ GIT_DIR=$HOME/.tools/.repo GIT_WORK_TREE=$HOME git remote set-url origin git@github.com:andybarron/dotfiles.git
