@@ -1,11 +1,17 @@
+marlonrichert/zsh-autocomplete # interactive completions
+
+zsh-users/zsh-completions
+ohmyzsh/ohmyzsh path:lib
+
 asdf-vm/asdf
 asdf-vm/asdf path:completions kind:fpath
-zsh-users/zsh-completions
+
 mafredri/zsh-async
-sindresorhus/pure kind:fpath # must be after zsh-async
+sindresorhus/pure kind:fpath
+
 zsh-users/zsh-autosuggestions # inline suggestions
-marlonrichert/zsh-autocomplete # interactive completions
-ohmyzsh/ohmyzsh path:plugins/fzf # must be after zsh-autocomplete
-ohmyzsh/ohmyzsh path:lib/git.zsh # must be before ohmyzsh git plugin
-ohmyzsh/ohmyzsh path:plugins/git # must be after zsh-autocomplete (compinit)
+
+ohmyzsh/ohmyzsh path:plugins/fzf
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+
 zsh-users/zsh-syntax-highlighting # must be last and not deferred

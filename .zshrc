@@ -1,5 +1,8 @@
 setopt interactive_comments
 
+# for profiling: un-comment following line, then run zprof
+# zmodload zsh/zprof
+
 function() {
   local ROOT="$HOME/.tools"
   local REPOS="$ROOT/repos"
