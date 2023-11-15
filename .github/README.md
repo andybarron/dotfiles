@@ -5,27 +5,31 @@
 1.  Create bare clone of repository.<br>
 
     ```shell
-    git clone --bare git@github.com:andybarron/dotfiles.git $HOME/.tools/.repo.git
+    git clone --bare git@github.com:andybarron/dotfiles.git ~/.tools/.repo.git
+    ```
 
+    ```shell
     # If SSH or credentials are unavailable, use HTTPS instead:
-    # $ git clone --bare https://github.com/andybarron/dotfiles.git $HOME/.tools/.repo.git
+    # $ git clone --bare https://github.com/andybarron/dotfiles.git ~/.tools/.repo.git
 
     # Upgrade to SSH later:
-    # $ GIT_DIR=$HOME/.tools/.repo.git GIT_WORK_TREE=$HOME git remote set-url origin git@github.com:andybarron/dotfiles.git
+    # $ GIT_DIR=~/.tools/.repo.git GIT_WORK_TREE=~ git remote set-url origin git@github.com:andybarron/dotfiles.git
     ```
 
 1.  Check out files.
 
     ```shell
-    GIT_DIR=$HOME/.tools/.repo.git GIT_WORK_TREE=$HOME git checkout
+    GIT_DIR=~/.tools/.repo.git GIT_WORK_TREE=~ git checkout
+    ```
 
+    ```shell
     # In case of conflicts (e.g. if .zshrc already exists), overwrite with `--force`:
-    # $ GIT_DIR=$HOME/.tools/.repo.git GIT_WORK_TREE=$HOME git checkout --force
+    # $ GIT_DIR=~/.tools/.repo.git GIT_WORK_TREE=~ git checkout --force
     ```
 
 1.  Let the games begin:
     ```shell
-    source $HOME/.zshrc
+    source ~/.zshrc
     ```
 
 ## Links
