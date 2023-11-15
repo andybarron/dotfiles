@@ -1,0 +1,9 @@
+[user]
+	name = Andy Barron
+	email = andybarron@protonmail.com
+
+[init]
+	defaultbranch = main
+
+[push]
+	autoSetupRemote = true
