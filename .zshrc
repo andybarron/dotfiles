@@ -1,4 +1,3 @@
-# TODO: nerd font repo
 setopt interactive_comments
 
 function() {
@@ -12,9 +11,6 @@ function() {
 
   # update PATH for local binaries e.g. pip installs
   export PATH="$HOME/.local/bin:$PATH"
-
-  # configure default editor
-  export VISUAL='vi'
 
   # super edge case: set up locale if necessary
   # (fixes pure prompt in docker containers)
@@ -34,14 +30,14 @@ function() {
   if command -v fortune &> /dev/null; then
     zshrc__quotes_root="$QUOTES"
     zshrc__cow_path="$FUN/grogu.cow"
-    zshrc__quote_path() {
+    zshrc::quote_path() {
       local quote_dir="${zshrc__quotes_root}/$(date +"%Y/%m/%d")"
       mkdir -p "$quote_dir"
       echo "$quote_dir/quote.txt"
     }
 
-    zshrc__quote() {
-      local current_path=$(zshrc__quote_path)
+    zshrc::quote() {
+      local current_path=$(zshrc::quote_path)
       if [[ ! -f "$current_path" ]]; then
         fortune -s > "$current_path"
       fi
@@ -51,12 +47,12 @@ function() {
       cat "$current_path" | eval $cow_cmd | eval $lolcat_cmd
     }
 
-    zshrc__requote() {
-      rm -f "$(zshrc__quote_path)"
-      zshrc__quote
+    zshrc::requote() {
+      rm -f "$(zshrc::quote_path)"
+      zshrc::quote
     }
 
-    [[ -f $(zshrc__quote_path) ]] || zshrc__quote
+    [[ -f $(zshrc::quote_path) ]] || zshrc::quote
   fi
 
   # set up antidote (zsh plugin manager)
@@ -110,10 +106,13 @@ function() {
   # set up nvim if found
   if command -v nvim &> /dev/null; then
     alias vim='\nvim'
+    export VISUAL=nvim
   else
     missing_commands+='nvim'
+    export VISUAL=vim
   fi
   alias vi='vim'
+  alias v='vim'
 
   # aliases: ls/lsd
   alias ls='\ls --color=auto'

@@ -7,3 +7,6 @@
 
 [push]
 	autoSetupRemote = true
+
+[commit]
+	verbose = true
