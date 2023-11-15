@@ -129,6 +129,10 @@ function() {
   alias dtf='dotfiles'
   alias undtf='undotfiles'
 
+  # configure dotfiles repository
+  eval $(dotfiles git config --local status.showUntrackedFiles no)
+  eval $(dotfiles git config --local remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*')
+
   # alert on missing commands
   if [[ ${#missing_commands[@]} -ne 0 ]]; then
     zshrc__warn "The following commands were not found: ${missing_commands[*]}"
