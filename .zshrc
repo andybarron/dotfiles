@@ -6,8 +6,8 @@ setopt interactive_comments
 
 function() {
   local ROOT="$HOME/.tools"
-  local REPOS="$ROOT/repos"
-  local REPO="$ROOT/.repo"
+  local REPOS="$ROOT/.repos"
+  local REPO="$ROOT/.repo.git"
   local QUOTES="$ROOT/.quotes"
   local FUN="$ROOT/fun"
   local ANTIDOTE_DIR="$REPOS/antidote"
