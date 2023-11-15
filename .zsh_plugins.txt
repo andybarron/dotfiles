@@ -1,7 +1,6 @@
 marlonrichert/zsh-autocomplete # interactive completions
 
 zsh-users/zsh-completions
-ohmyzsh/ohmyzsh path:lib
 
 asdf-vm/asdf
 asdf-vm/asdf path:completions kind:fpath
