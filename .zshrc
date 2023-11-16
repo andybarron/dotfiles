@@ -4,7 +4,7 @@ setopt interactive_comments
 # for profiling: un-comment following line, then run zprof
 # zmodload zsh/zprof
 
-function() {
+function () {
   local ROOT="$HOME/.tools"
   local REPOS="$ROOT/.repos"
   local REPO="$ROOT/.repo.git"
@@ -13,19 +13,41 @@ function() {
   local ANTIDOTE_DIR="$REPOS/antidote"
   local ANTIDOTE_INIT="$ANTIDOTE_DIR/antidote.zsh"
 
-  # update PATH for local binaries e.g. pip installs
-  export PATH="$HOME/.local/bin:$PATH"
-
   # utility functions
-  function zshrc__info() {
+  function zshrc::info() {
     echo -e "\e[106m\e[30m[warn]\e[m \e[96m$@\e[m"
   }
-  function zshrc__warn() {
+  function zshrc::warn() {
     echo -e "\e[43m\e[30m[info]\e[m \e[33m$@\e[m"
   }
+  function zshrc::git_set_if_unset() {
+    if [[ -z $(git config --global --get "$1") ]]; then
+      git config --global "$1" "$2"
+    fi
+  }
+  function zshrc::command_exists() {
+    command -v "$1" &> /dev/null
+  }
+
+  # set git config (if not already set)
+  declare -A GIT_OPTIONS
+  GIT_OPTIONS+=(
+    [user.name]="Andy Barron"
+    [init.defaultbranch]="main"
+    [push.autoSetupRemote]="true"
+    [commit.verbose]="true"
+  )
+  if zshrc::command_exists base64; then
+    GIT_OPTIONS+=(
+      [user.email]="$(base64 --decode <<< "YW5keWJhcnJvbkBwcm90b25tYWlsLmNvbQo=")"
+    )
+  fi
+  for key value in ${(kv)GIT_OPTIONS}; do
+    zshrc::git_set_if_unset "$key" "$value"
+  done
 
   # quote of the day!
-  if command -v fortune &> /dev/null; then
+  if zshrc::command_exists fortune; then
     zshrc__quotes_root="$QUOTES"
     zshrc__cow_path="$FUN/grogu.cow"
     zshrc::quote_path() {
@@ -40,8 +62,8 @@ function() {
         fortune -s > "$current_path"
       fi
 
-      command -v lolcat &> /dev/null && lolcat_cmd="lolcat" || lolcat_cmd="cat"
-      command -v cowthink &> /dev/null && cow_cmd="cowthink -f $zshrc__cow_path" || cow_cmd="cat"
+      zshrc::command_exists lolcat && lolcat_cmd="lolcat" || lolcat_cmd="cat"
+      zshrc::command_exists cowthink && cow_cmd="cowthink -f $zshrc__cow_path" || cow_cmd="cat"
       cat "$current_path" | eval $cow_cmd | eval $lolcat_cmd
     }
 
@@ -56,7 +78,7 @@ function() {
   # set up antidote (zsh plugin manager)
   zstyle ':antidote:bundle' use-friendly-names 'yes'
   if [[ ! -f "$ANTIDOTE_INIT" ]]; then
-    zshrc__info "Installing antidote..."
+    zshrc::info "Installing antidote..."
     git clone https://github.com/mattmc3/antidote.git "$ANTIDOTE_DIR"
   fi
   source "$ANTIDOTE_INIT"
@@ -78,7 +100,7 @@ function() {
   # TODO: cargo, rustup completions
 
   # set up zoxide if found
-  if command -v zoxide &> /dev/null; then
+  if zshrc::command_exists zoxide; then
     eval "$(zoxide init zsh)"
   else
     missing_commands+="zoxide"
@@ -87,14 +109,14 @@ function() {
 
   # # set up thefuck if found
   # # TODO: broken due to https://github.com/nvbn/thefuck/issues/1372
-  # if command -v thefuck &> /dev/null; then
+  # if zshrc::command_exists thefuck; then
   #   eval $(thefuck --alias)
   # else
   #   missing_commands+='thefuck'
   # fi
 
   # set up lsd if found
-  if command -v lsd &> /dev/null; then
+  if zshrc::command_exists lsd; then
     alias l='\lsd --date=relative'
   else
     missing_commands+='lsd'
@@ -102,7 +124,7 @@ function() {
   fi
 
   # set up nvim if found
-  if command -v nvim &> /dev/null; then
+  if zshrc::command_exists nvim; then
     alias vim='\nvim'
     export VISUAL=nvim
   else
@@ -129,8 +151,11 @@ function() {
   alias dtf='dotfiles'
   alias undtf='undotfiles'
 
+  # aliases: misc
+  alias grep="grep --color=auto"
+
   # alert on missing commands
   if [[ ${#missing_commands[@]} -ne 0 ]]; then
-    zshrc__warn "The following commands were not found: ${missing_commands[*]}"
+    zshrc::warn "The following commands were not found: ${missing_commands[*]}"
   fi
 }
