@@ -203,7 +203,7 @@ function () {
   # git: fetch latest default branch, rebase into current branch, and safely force push
   function gsync() {
     local remote=$(git remote || zshrc::error "Could not find git remote" && return 1)
-    local default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | basename) || zshrc::error "Could not find git default branch" && return 1
+    local default_branch=$(basename $(git symbolic-ref refs/remotes/origin/HEAD)) || zshrc::error "Could not find git default branch" && return 1
     git fetch "$remote" "$default_branch" && git rebase "$remote/$default_branch" && git push --force-with-lease
   }
 
