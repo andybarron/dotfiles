@@ -2,3 +2,6 @@
 	fetch = +refs/heads/*:refs/remotes/origin/*
 [status]
 	showUntrackedFiles = no
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
