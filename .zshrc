@@ -12,13 +12,78 @@ function () {
   local FUN="$ROOT/fun"
   local ANTIDOTE_DIR="$REPOS/antidote"
   local ANTIDOTE_INIT="$ANTIDOTE_DIR/antidote.zsh"
+  local GIT_EMAIL_BASE64="YW5keWJhcnJvbkBwcm90b25tYWlsLmNvbQo="
+
+  local -A GIT_OPTIONS
+  GIT_OPTIONS=(
+    [user.name]="Andy Barron"
+    [init.defaultbranch]="main"
+    [push.autoSetupRemote]="true"
+    [commit.verbose]="true"
+  )
+
+  local -A CUSTOM_ALIASES
+  CUSTOM_ALIASES=(
+    # git
+    g 'git'
+    # git add
+    ga 'git add'
+    gaa 'git add --all'
+    # git branch
+    gb 'git branch'
+    gbd 'git branch --delete'
+    gbm 'git branch --move'
+    # git commit
+    gc 'git commit'
+    gca 'git commit --all'
+    gcam 'git commit --all --message'
+    gcm 'git commit --message'
+    # git diff
+    gd 'git diff'
+    gds 'git diff --staged'
+    # git log
+    gl 'git log'
+    glo 'git log --oneline'
+    # git status
+    gst 'git status'
+    # git switch
+    gsw 'git switch'
+    gswc 'git switch -c'
+    # git pull
+    gl 'git pull'
+    # git push
+    gp 'git push'
+    gpf 'git push --force-with-lease'
+    # git misc helpers
+    gundo 'git reset HEAD~1'
+    gredo 'git commit --reuse-message=ORIG_HEAD'
+    # ls(d?)
+    l 'ls'
+    la 'l -A'
+    ll 'l -l'
+    lt 'l --tree'
+    lal 'l -Al'
+    lat 'l -A --tree'
+    llt 'l -l --tree'
+    lalt 'l -Al --tree'
+    # dotfile management
+    dotfiles "GIT_DIR=$REPO GIT_WORK_TREE=$HOME"
+    undotfiles 'unset GIT_DIR GIT_WORK_TREE'
+    dtf 'dotfiles'
+    undtf 'undotfiles'
+    # misc
+    grep '\grep --color=auto'
+  )
 
   # utility functions
   function zshrc::info() {
-    echo -e "\e[106m\e[30m[warn]\e[m \e[96m$@\e[m"
+    echo -e "\e[106m\e[30m[info]\e[m \e[96m$@\e[m" >&2
   }
   function zshrc::warn() {
-    echo -e "\e[43m\e[30m[info]\e[m \e[33m$@\e[m"
+    echo -e "\e[43m\e[30m[warn]\e[m \e[33m$@\e[m" >&2
+  }
+  function zshrc::error() {
+    echo -e "\e[41m\e[30m[error]\e[m \e[31m$@\e[m" >&2
   }
   function zshrc::git_set_if_unset() {
     if [[ -z $(git config --global --get "$1") ]]; then
@@ -30,16 +95,9 @@ function () {
   }
 
   # set git config (if not already set)
-  declare -A GIT_OPTIONS
-  GIT_OPTIONS+=(
-    [user.name]="Andy Barron"
-    [init.defaultbranch]="main"
-    [push.autoSetupRemote]="true"
-    [commit.verbose]="true"
-  )
   if zshrc::command_exists base64; then
     GIT_OPTIONS+=(
-      [user.email]="$(base64 --decode <<< "YW5keWJhcnJvbkBwcm90b25tYWlsLmNvbQo=")"
+      [user.email]="$(base64 --decode <<< "$GIT_EMAIL_BASE64")"
     )
   fi
   for key value in ${(kv)GIT_OPTIONS}; do
@@ -97,7 +155,11 @@ function () {
   # set up zsh completions
   mkdir -p ~/.zfunc
   fpath+=~/.zfunc
-  # TODO: cargo, rustup completions
+
+  if zshrc::command_exists rustup; then
+    [[ ! -f ~/.zfunc/_rustup ]] && rustup completions zsh > ~/.zfunc/_rustup
+    [[ ! -f ~/.zfunc/_cargo ]] && rustup completions zsh cargo > ~/.zfunc/_cargo
+  fi
 
   # set up zoxide if found
   if zshrc::command_exists zoxide; then
@@ -117,10 +179,10 @@ function () {
 
   # set up lsd if found
   if zshrc::command_exists lsd; then
-    alias l='\lsd --date=relative'
+    alias ls='\lsd --date=relative'
   else
     missing_commands+='lsd'
-    alias l='\ls -h --color=auto'
+    alias ls='\ls -h --color=auto'
   fi
 
   # set up nvim if found
@@ -134,25 +196,16 @@ function () {
   alias vi='vim'
   alias v='vim'
 
-  # aliases: ls/lsd
-  alias ls='\ls --color=auto'
-
-  alias la='l -A'
-  alias ll='l -l'
-  alias lt='l --tree'
-  alias lal='l -Al'
-  alias lat='l -A --tree'
-  alias llt='l -l --tree'
-  alias lalt='l -Al --tree'
-
-  # aliases: dotfile management
-  alias dotfiles="GIT_DIR=$REPO GIT_WORK_TREE=$HOME"
-  alias undotfiles='unset GIT_DIR GIT_WORK_TREE'
-  alias dtf='dotfiles'
-  alias undtf='undotfiles'
-
-  # aliases: misc
-  alias grep="grep --color=auto"
+  # set up aliases
+  for key value in ${(kv)CUSTOM_ALIASES}; do
+    alias "$key"="$value"
+  done
+  # git: fetch latest default branch, rebase into current branch, and safely force push
+  function gsync() {
+    local remote=$(git remote || zshrc::error "Could not find git remote" && return 1)
+    local default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | basename) || zshrc::error "Could not find git default branch" && return 1
+    git fetch "$remote" "$default_branch" && git rebase "$remote/$default_branch" && git push --force-with-lease
+  }
 
   # ensure dotfiles git config is synced
   eval "dotfiles git config --local include.path '../.gitconfig'"
