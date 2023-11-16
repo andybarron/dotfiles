@@ -27,12 +27,6 @@
     # $ GIT_DIR=~/.tools/.repo.git GIT_WORK_TREE=~ git checkout --force
     ```
 
-1.  Set up repository Git config.
-
-    ```shell
-    GIT_DIR=~/.tools/.repo.git git config --local include.path '../.gitconfig'
-    ```
-
 1.  Let the games begin:
     ```shell
     source ~/.zshrc

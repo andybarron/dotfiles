@@ -154,6 +154,9 @@ function () {
   # aliases: misc
   alias grep="grep --color=auto"
 
+  # ensure dotfiles git config is synced
+  eval "dotfiles git config --local include.path '../.gitconfig'"
+
   # alert on missing commands
   if [[ ${#missing_commands[@]} -ne 0 ]]; then
     zshrc::warn "The following commands were not found: ${missing_commands[*]}"
