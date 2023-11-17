@@ -81,12 +81,14 @@ function zshrc::init() {
   # track missing commands for warning
   missing_commands=()
 
-  # attach/start zellij if installed
+  # attach/start zellij if installed and ZELLIJ_ATTACH is set
   # (rest of file will be sourced within zellij)
-  if zshrc::command_exists zellij; then
-    [[ -z "$ZELLIJ" ]] && (zellij attach -c default) && exit
-  else
-    missing_commands+='zellij'
+  if [[ ! -z "$ZELLIJ_ATTACH" ]]; then
+    if zshrc::command_exists zellij; then
+      [[ -z "$ZELLIJ" ]] && (zellij attach -c default) && exit
+    else
+      missing_commands+='zellij'
+    fi
   fi
 
   # enable zprof just in case
