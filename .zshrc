@@ -78,6 +78,9 @@ function zshrc::init() {
     grep '\grep --color=auto'
   )
 
+  # track missing commands for warning
+  missing_commands=()
+
   # attach/start zellij if installed
   # (rest of file will be sourced within zellij)
   if zshrc::command_exists zellij; then
@@ -139,9 +142,6 @@ function zshrc::init() {
 
   # set prompt
   autoload -Uz promptinit && promptinit && prompt pure
-
-  # track missing commands for warning
-  missing_commands=()
 
   # set up zsh completions
   mkdir -p ~/.zfunc
