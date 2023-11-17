@@ -1,10 +1,7 @@
 setopt interactive_comments
+bindkey -e
 
-# https://www.danielmoch.com/posts/2018/11/zsh-compinit-rtfm
-# for profiling: un-comment following line, then run zprof
-# zmodload zsh/zprof
-
-function () {
+function zshrc::init() {
   local ROOT="$HOME/.tools"
   local REPOS="$ROOT/.repos"
   local REPO="$ROOT/.repo.git"
@@ -21,6 +18,12 @@ function () {
     [push.autoSetupRemote]="true"
     [commit.verbose]="true"
   )
+
+  if zshrc::command_exists base64; then
+    GIT_OPTIONS+=(
+      [user.email]="$(base64 --decode <<< "$GIT_EMAIL_BASE64")"
+    )
+  fi
 
   local -A CUSTOM_ALIASES
   CUSTOM_ALIASES=(
@@ -75,31 +78,19 @@ function () {
     grep '\grep --color=auto'
   )
 
-  # utility functions
-  function zshrc::info() {
-    echo -e "\e[106m\e[30m[info]\e[m \e[96m$@\e[m" >&2
-  }
-  function zshrc::warn() {
-    echo -e "\e[43m\e[30m[warn]\e[m \e[33m$@\e[m" >&2
-  }
-  function zshrc::error() {
-    echo -e "\e[41m\e[30m[error]\e[m \e[31m$@\e[m" >&2
-  }
-  function zshrc::git_set_if_unset() {
-    if [[ -z $(git config --global --get "$1") ]]; then
-      git config --global "$1" "$2"
-    fi
-  }
-  function zshrc::command_exists() {
-    command -v "$1" &> /dev/null
-  }
+  # attach/start zellij if installed
+  # (rest of file will be sourced within zellij)
+  if zshrc::command_exists zellij; then
+    [[ -z "$ZELLIJ" ]] && (zellij attach -c default) && exit
+  else
+    missing_commands+='zellij'
+  fi
+
+  # enable zprof just in case
+  # https://www.danielmoch.com/posts/2018/11/zsh-compinit-rtfm
+  zmodload zsh/zprof
 
   # set git config (if not already set)
-  if zshrc::command_exists base64; then
-    GIT_OPTIONS+=(
-      [user.email]="$(base64 --decode <<< "$GIT_EMAIL_BASE64")"
-    )
-  fi
   for key value in ${(kv)GIT_OPTIONS}; do
     zshrc::git_set_if_unset "$key" "$value"
   done
@@ -202,8 +193,11 @@ function () {
   done
   # git: fetch latest default branch, rebase into current branch, and safely force push
   function gsync() {
-    local remote=$(git remote || zshrc::error "Could not find git remote" && return 1)
-    local default_branch=$(basename $(git symbolic-ref refs/remotes/origin/HEAD)) || zshrc::error "Could not find git default branch" && return 1
+    # one-line variable init+assignment swallows errors in commands
+    local remote
+    local default_branch
+    remote=$(git remote) && \
+    default_branch=$(basename $(git symbolic-ref refs/remotes/origin/HEAD)) && \
     git fetch "$remote" "$default_branch" && git rebase "$remote/$default_branch" && git push --force-with-lease
   }
 
@@ -215,3 +209,24 @@ function () {
     zshrc::warn "The following commands were not found: ${missing_commands[*]}"
   fi
 }
+
+# utility functions
+function zshrc::info() {
+  echo -e "\e[106m\e[30m[info]\e[m \e[96m$@\e[m" >&2
+}
+function zshrc::warn() {
+  echo -e "\e[43m\e[30m[warn]\e[m \e[33m$@\e[m" >&2
+}
+function zshrc::error() {
+  echo -e "\e[41m\e[30m[error]\e[m \e[31m$@\e[m" >&2
+}
+function zshrc::git_set_if_unset() {
+  if [[ -z $(git config --global --get "$1") ]]; then
+    git config --global "$1" "$2"
+  fi
+}
+function zshrc::command_exists() {
+  command -v "$1" &> /dev/null
+}
+
+zshrc::init
