@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/false
+# shellcheck shell=sh
 
 . "$HOME/.dotfiles/source/helpers.sh"
 

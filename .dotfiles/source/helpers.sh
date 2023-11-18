@@ -10,7 +10,7 @@ RC__SOURCE_HELPERS=1
 
 # check if command exists; if not, add to missing commands list
 rc__command_exists() {
-  if command -v "$1" > /dev/null 2>&1; then
+  if rc__command_exists_optional "$1"; then
     return 0
   else
     if [ -z "$RC__MISSING_COMMANDS" ]; then
@@ -22,6 +22,11 @@ rc__command_exists() {
   fi
 }
 
+# check if command exists, but don't warn if not
+rc__command_exists_optional() {
+  command -v "$1" > /dev/null 2>&1
+}
+
 # set global git config option unless it already has a value
 rc__git_set_if_unset() {
   if [ -z "$(git config --global --get "$1")" ]; then
@@ -29,17 +34,14 @@ rc__git_set_if_unset() {
   fi
 }
 
-# Returns 0 if the specified string contains the specified substring,
-# otherwise returns 1.
-# https://stackoverflow.com/a/8811800
-rc__contains() {
-    string="$1"
-    substring="$2"
-    if [ "${string#*"$substring"}" != "$string" ]; then
-        return 0    # $substring is in $string
-    else
-        return 1    # $substring is not in $string
-    fi
+# clone git repository URL to directory matching repository name,
+# it no such directory exists
+rc__git_clone() {
+  rc__git_repo_name="$(basename "$1" .git)"
+  if [ ! -d "$RC__REPOS/$rc__git_repo_name" ]; then
+    git clone "$1" "$RC__REPOS/$rc__git_repo_name"
+  fi
+  unset rc__git_repo_name
 }
 
 rc__info() {
@@ -57,3 +59,29 @@ rc__warn_missing_commands() {
     rc__warn "missing commands: $(echo "$RC__MISSING_COMMANDS" | sort | uniq | tr '\n' ' ')"
   fi
 }
+
+if rc__command_exists_optional fortune; then
+  rc__quote_path() {
+    rc__last_quote_dir="$RC__QUOTES/$(date +"%Y/%m/%d")"
+    mkdir -p "$rc__last_quote_dir"
+    echo "$rc__last_quote_dir/quote.txt"
+    unset rc__last_quote_dir
+  }
+
+  rc__quote() {
+    if [ ! -f "$(rc__quote_path)" ]; then
+      fortune -s > "$(rc__quote_path)"
+    fi
+
+    if rc__command_exists_optional lolcat; then
+      lolcat "$(rc__quote_path)"
+    else
+      cat "$(rc__quote_path)"
+    fi
+  }
+
+  rc__requote() {
+    rm -f "$(rc__quote_path)"
+    rc__quote
+  }
+fi

@@ -8,6 +8,7 @@ RC__SOURCE_INTERACTIVE=1
 
 . "$HOME/.dotfiles/source/env.sh"
 . "$HOME/.dotfiles/source/helpers.sh"
+. "$HOME/.dotfiles/source/aliases.sh"
 
 # set global git config options and aliases
 if rc__command_exists git; then
@@ -16,27 +17,20 @@ if rc__command_exists git; then
   rc__git_set_if_unset push.autoSetupRemote true
   rc__git_set_if_unset commit.verbose true
   if rc__command_exists base64; then
-      rc__git_set_if_unset user.email "$(echo "YW5keWJhcnJvbkBwcm90b25tYWlsLmNvbQo=" | base64 --decode)"
+    rc__git_set_if_unset user.email "$(echo "YW5keWJhcnJvbkBwcm90b25tYWlsLmNvbQo=" | base64 --decode)"
   fi
 fi
 
 # ensure dotfiles git config is synced
 git --git-dir="$RC__GIT_DIR" config --local include.path '../.gitconfig'
 
-# install asdf if necessary
-if [ ! -d "$RC__REPOS/asdf" ]; then
-    git clone https://github.com/asdf-vm/asdf.git "$RC__REPOS/asdf"
-fi
-
-# source asdf for POSIX shells
-. "$RC__REPOS/asdf/asdf.sh"
-
 # set up EDITOR variable
 if rc__command_exists nvim; then
   export VISUAL=nvim
-  alias vim=nvim
+  alias v=nvim
 else
   export VISUAL=vim
+  alias v=vim
 fi
 
 # set up lsd if found
@@ -46,9 +40,10 @@ else
   alias l='ls -h --color=auto'
 fi
 
-# set up aliases
-grep -v '^ *#' < "$RC__ALIASES" | while IFS= read -r line
-do
-  [ -z "$line" ] && continue
-  eval "alias $(echo "$line" | sed -E 's/ +/=/' | cat)"
-done
+# TODO: broken due to https://github.com/nvbn/thefuck/issues/1372
+# # set up thefuck if found
+# if rc__command_exists thefuck; then
+#   eval "$(thefuck --alias)"
+# fi
+
+. "$RC__SOURCE/warn-missing.sh"
