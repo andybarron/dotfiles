@@ -8,7 +8,7 @@
 export RC__SOURCE_ENV=1
 
 # custom environment variables used by custom configs
-export RC__ROOT=~/.tools
+export RC__ROOT=~/.dotfiles
 export RC__ALIASES="$RC__ROOT/aliases.txt"
 export RC__SCRIPTS="$RC__ROOT/scripts"
 export RC__SOURCE="$RC__ROOT/source"
