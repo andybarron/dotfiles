@@ -41,7 +41,7 @@ lat 'l -A --tree'
 llt 'l -l --tree'
 lalt 'l -Al --tree'
 
-dotfiles 'GIT_DIR="$RC__REPO" GIT_WORK_TREE="$HOME"'
+dotfiles 'GIT_DIR="$RC__GIT_DIR" GIT_WORK_TREE="$HOME"'
 dtf 'dotfiles'
 
 grep 'command grep --color auto'

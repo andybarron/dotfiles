@@ -21,7 +21,7 @@ if rc__command_exists git; then
 fi
 
 # ensure dotfiles git config is synced
-git --git-dir="$RC__REPO" config --local include.path '../.gitconfig'
+git --git-dir="$RC__GIT_DIR" config --local include.path '../.gitconfig'
 
 # install asdf if necessary
 if [ ! -d "$RC__REPOS/asdf" ]; then
