@@ -6,8 +6,8 @@
 [ -n "${RC__SOURCE_INTERACTIVE:-""}" ] && return 0
 RC__SOURCE_INTERACTIVE=1
 
-. "$HOME/.dotfiles/source/env"
-. "$HOME/.dotfiles/source/helpers"
+. "$HOME/.dotfiles/source/env.sh"
+. "$HOME/.dotfiles/source/helpers.sh"
 
 # set global git config options and aliases
 if rc__command_exists git; then

@@ -1,1 +1,1 @@
-source "$HOME/.dotfiles/source/env"
+source "$HOME/.dotfiles/source/env.sh"

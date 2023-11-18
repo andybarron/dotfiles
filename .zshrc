@@ -141,7 +141,7 @@ bindkey -e
 #   alias v='vim'
 
 
-source "$RC__SOURCE/interactive"
+source "$RC__SOURCE/interactive.sh"
 
 # source ~/.tools/scripts/exec-fish.sh
 

@@ -6,7 +6,7 @@
 [ -n "${RC__SOURCE_HELPERS:-""}" ] && return 0
 RC__SOURCE_HELPERS=1
 
-. "$HOME/.dotfiles/source/env"
+. "$HOME/.dotfiles/source/env.sh"
 
 # check if command exists; if not, add to missing commands list
 rc__command_exists() {
