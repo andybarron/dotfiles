@@ -1,12 +1,8 @@
 zmodload zsh/zprof
 
-source "$RC__SOURCE/helpers.sh"
+source "$RC__SOURCE/multiplex.sh"
 
-if test -f "$RC__ROOT/.zellij"; then
-  rc__command_exists zellij && \
-    test -z "$ZELLIJ" && \
-    exec zellij attach -c default
-fi
+source "$RC__SOURCE/helpers.sh"
 
 setopt interactive_comments
 bindkey -e

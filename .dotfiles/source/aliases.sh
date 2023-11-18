@@ -1,9 +1,10 @@
 #!/bin/false
 # shellcheck shell=sh
 
-# aliases for POSIX shells
+# aliases for interactive POSIX shells
 
 . "$HOME/.dotfiles/source/env.sh"
+. "$RC__SOURCE/check-interactive.sh"
 
 alias g='git'
 

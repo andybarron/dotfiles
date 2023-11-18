@@ -7,8 +7,9 @@
 RC__SOURCE_INTERACTIVE=1
 
 . "$HOME/.dotfiles/source/env.sh"
-. "$HOME/.dotfiles/source/helpers.sh"
-. "$HOME/.dotfiles/source/aliases.sh"
+. "$RC__SOURCE/check-interactive.sh"
+. "$RC__SOURCE/helpers.sh"
+. "$RC__SOURCE/aliases.sh"
 
 # set global git config options and aliases
 if rc__command_exists git; then
