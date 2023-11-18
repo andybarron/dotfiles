@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+function gsync() {
+  # one-line variable init+assignment swallows errors in commands
+  local remote
+  local default_branch
+  remote=$(git remote) && \
+  default_branch=$(basename "$(git symbolic-ref refs/remotes/origin/HEAD)") && \
+  git fetch "$remote" "$default_branch" && git rebase "$remote/$default_branch" && git push --force-with-lease
+}

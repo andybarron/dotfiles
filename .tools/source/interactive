@@ -1,0 +1,54 @@
+#!/bin/false
+# shellcheck shell=sh
+
+# init script to source for all interactive (POSIX) shells
+
+[ -n "${RC__SOURCE_INTERACTIVE:-""}" ] && return 0
+RC__SOURCE_INTERACTIVE=1
+
+. "$HOME/.tools/source/env"
+. "$HOME/.tools/source/helpers"
+
+# set global git config options and aliases
+if rc__command_exists git; then
+  rc__git_set_if_unset user.name "Andy Barron"
+  rc__git_set_if_unset init.defaultbranch main
+  rc__git_set_if_unset push.autoSetupRemote true
+  rc__git_set_if_unset commit.verbose true
+  if rc__command_exists base64; then
+      rc__git_set_if_unset user.email "$(echo "YW5keWJhcnJvbkBwcm90b25tYWlsLmNvbQo=" | base64 --decode)"
+  fi
+fi
+
+# ensure dotfiles git config is synced
+git --git-dir="$RC__REPO" config --local include.path '../.gitconfig'
+
+# install asdf if necessary
+if [ ! -d "$RC__REPOS/asdf" ]; then
+    git clone https://github.com/asdf-vm/asdf.git "$RC__REPOS/asdf"
+fi
+
+# source asdf for POSIX shells
+. "$RC__REPOS/asdf/asdf.sh"
+
+# set up EDITOR variable
+if rc__command_exists nvim; then
+  export VISUAL=nvim
+  alias vim=nvim
+else
+  export VISUAL=vim
+fi
+
+# set up lsd if found
+if rc__command_exists lsd; then
+  alias l='lsd --date=relative'
+else
+  alias l='ls -h --color=auto'
+fi
+
+# set up aliases
+grep -v '^ *#' < "$RC__ALIASES" | while IFS= read -r line
+do
+  [ -z "$line" ] && continue
+  eval "alias $(echo "$line" | sed -E 's/ +/=/' | cat)"
+done

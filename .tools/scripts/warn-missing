@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. "$HOME/.tools/source/helpers"
+
+rc__warn_missing_commands

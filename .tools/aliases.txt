@@ -1,0 +1,50 @@
+
+g 'git'
+
+ga 'git add'
+gaa 'git add --all'
+
+gb 'git branch'
+gbd 'git branch --delete'
+gbm 'git branch --move'
+
+gc 'git commit'
+gca 'git commit --all'
+gcam 'git commit --all --message'
+gcm 'git commit --message'
+
+gd 'git diff'
+gds 'git diff --staged'
+
+gl 'git log'
+glo 'git log --oneline'
+
+gst 'git status'
+
+gsw 'git switch'
+gswc 'git switch -c'
+
+gl 'git pull'
+
+gp 'git push'
+gpf 'git push --force-with-lease'
+
+gundo 'git reset HEAD~1'
+gredo 'git commit --reuse-message ORIG_HEAD'
+gsync '$RC__SCRIPTS/gsync'
+
+la 'l -A'
+ll 'l -l'
+lt 'l --tree'
+lal 'l -Al'
+lat 'l -A --tree'
+llt 'l -l --tree'
+lalt 'l -Al --tree'
+
+dotfiles 'GIT_DIR="$RC__REPO" GIT_WORK_TREE="$HOME"'
+dtf 'dotfiles'
+
+grep 'command grep --color auto'
+
+vi 'vim'
+v 'vim'

@@ -1,0 +1,59 @@
+#!/bin/false
+# shellcheck shell=sh
+
+# helper functions for POSIX shells
+
+[ -n "${RC__SOURCE_HELPERS:-""}" ] && return 0
+RC__SOURCE_HELPERS=1
+
+. "$HOME/.tools/source/env"
+
+# check if command exists; if not, add to missing commands list
+rc__command_exists() {
+  if command -v "$1" > /dev/null 2>&1; then
+    return 0
+  else
+    if [ -z "$RC__MISSING_COMMANDS" ]; then
+      export RC__MISSING_COMMANDS="$1"
+    else
+      export RC__MISSING_COMMANDS="$RC__MISSING_COMMANDS\n$1"
+    fi
+    return 1
+  fi
+}
+
+# set global git config option unless it already has a value
+rc__git_set_if_unset() {
+  if [ -z "$(git config --global --get "$1")" ]; then
+    git config --global "$1" "$2"
+  fi
+}
+
+# Returns 0 if the specified string contains the specified substring,
+# otherwise returns 1.
+# https://stackoverflow.com/a/8811800
+rc__contains() {
+    string="$1"
+    substring="$2"
+    if [ "${string#*"$substring"}" != "$string" ]; then
+        return 0    # $substring is in $string
+    else
+        return 1    # $substring is not in $string
+    fi
+}
+
+rc__info() {
+  printf "\e[106m\e[30m[info ]\e[m \e[96m%s\e[m\n" "$*" >&2
+}
+rc__warn() {
+  printf "\e[43m\e[30m[warn ]\e[m \e[33m%s\e[m\n" "$@" >&2
+}
+rc__error() {
+  printf "\e[41m\e[30m[error]\e[m \e[31m%s\e[m\n" "$@" >&2
+}
+
+rc__warn_missing_commands() {
+  if [ -n "$RC__MISSING_COMMANDS" ]; then
+    rc__warn "missing commands: $(echo "$RC__MISSING_COMMANDS" | sort | uniq | tr '\n' ' ')"
+  fi
+}
