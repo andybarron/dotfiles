@@ -29,4 +29,3 @@ fi
 source "$RC__SOURCE/interactive.sh"
 
 autoload -Uz promptinit && promptinit && prompt pure
-autoload -Uz compinit && compinit
