@@ -20,5 +20,5 @@ fi
 if test -f "$RC__ROOT/.enable-tmux"; then
   rc__command_exists tmux && \
     test -z "$TMUX" && \
-    exec tmux new-session -As main
+    exec tmux new-session -As default
 fi
