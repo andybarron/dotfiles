@@ -4,6 +4,10 @@ source "$RC__SOURCE/multiplex.sh"
 
 source "$RC__SOURCE/helpers.sh"
 
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
 setopt interactive_comments
 bindkey -e
 
