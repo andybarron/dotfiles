@@ -11,7 +11,7 @@ setopt appendhistory
 setopt interactive_comments
 bindkey -e
 
-rc__quote
+rc__command_exists_optional rc__quote && rc__quote
 
 mkdir -p ~/.zfunc
 fpath+=~/.zfunc
