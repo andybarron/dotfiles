@@ -20,7 +20,7 @@ function rc__init {
   if [[ "$(ps -p $$ -ocommand=)" == *"zsh"* ]]; then
     exec zsh
   else
-    zsh
+    zsh -i
   fi
 }
 
