@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+function rc__init {
+  local protocol=${1:-""}
+  local git_url=""
+
+  if [[ $protocol == "https" ]]; then
+    git_url="https://github.com/andybarron/dotfiles.git"
+  elif [[ $protocol == "ssh" || $protocol == "" ]]; then
+    git_url="git@github.com:andybarron/dotfiles.git"
+  else
+    echo "Unknown git protocol: $protocol" >&2
+    return 1
+  fi
+
+  git clone --bare "$git_url" "$HOME/.dotfiles/.gitbare"
+  git --git-dir "$HOME/.dotfiles/.gitbare" --work-tree "$HOME" checkout \
+    --force
+  if test -n "$ZSH_VERSION"; then
+    source "$HOME/.zshrc"
+  else
+    zsh
+  fi
+}
+
+rc__init "$@"

@@ -38,7 +38,9 @@ alias gpf='git push --force-with-lease'
 
 alias gundo='git reset HEAD~1'
 alias gredo='git commit --reuse-message ORIG_HEAD'
-alias gsync='"$RC__SCRIPTS"/gsync'
+# weird quoting due to zsh syntax highlighting bug
+# shellcheck disable=SC2139
+alias gsync="$RC__SCRIPTS/git-sync"
 
 alias la='l -A'
 alias ll='l -l'
