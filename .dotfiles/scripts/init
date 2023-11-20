@@ -17,11 +17,7 @@ function rc__init {
   git clone --bare "$git_url" "$HOME/.dotfiles/.gitbare"
   git --git-dir "$HOME/.dotfiles/.gitbare" --work-tree "$HOME" checkout \
     --force
-  if [[ "$(ps -p $$ -ocommand=)" == *"zsh"* ]]; then
-    exec zsh
-  else
-    zsh -i
-  fi
+  exec zsh -i
 }
 
 rc__init "$@"
