@@ -4,9 +4,9 @@
     [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts).
 
 1.  ```shell
-    bash $(curl -sH 'Cache-Control: no-cache' https://raw.githubusercontent.com/andybarron/dotfiles/main/.dotfiles/scripts/init)# https
+    curl -sH 'Cache-Control: no-cache' https://raw.githubusercontent.com/andybarron/dotfiles/main/.dotfiles/scripts/init | bash -s
     ```
-    Add `https` argument if SSH or credentials are not available.
+    Append `-- https` to command if SSH or credentials are not available.
 
 ## Links
 
