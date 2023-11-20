@@ -17,7 +17,7 @@ function rc__init {
   git clone --bare "$git_url" "$HOME/.dotfiles/.gitbare"
   git --git-dir "$HOME/.dotfiles/.gitbare" --work-tree "$HOME" checkout \
     --force
-  if test -z "${ZSH_VERSION:-}"; then
+  if [[ "$(ps -p $$ -ocommand=)" == *"zsh"* ]]; then
     exec zsh
   else
     zsh
