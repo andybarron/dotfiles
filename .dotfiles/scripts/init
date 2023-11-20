@@ -18,7 +18,7 @@ function rc__init {
   git --git-dir "$HOME/.dotfiles/.gitbare" --work-tree "$HOME" checkout \
     --force
   if test -z "${ZSH_VERSION:-}"; then
-    source "$HOME/.zshrc"
+    exec zsh
   else
     zsh
   fi

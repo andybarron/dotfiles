@@ -4,7 +4,7 @@
     [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts).
 
 1.  ```shell
-    curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andybarron/dotfiles/main/.dotfiles/scripts/init | bash
+    curl -sH 'Cache-Control: no-cache' https://raw.githubusercontent.com/andybarron/dotfiles/main/.dotfiles/scripts/init | bash
     ```
 
 ## Links
