@@ -25,7 +25,7 @@ if rc__command_exists zoxide; then
   eval "$(zoxide init zsh)"
 fi
 
-if rc__command_exists rustup; then
+if rc__command_exists_optional rustup; then
   [[ ! -f ~/.zfunc/_rustup ]] && rustup completions zsh > ~/.zfunc/_rustup
   [[ ! -f ~/.zfunc/_cargo ]] && rustup completions zsh cargo > ~/.zfunc/_cargo
 fi
