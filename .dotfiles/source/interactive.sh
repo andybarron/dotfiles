@@ -47,4 +47,11 @@ fi
 #   eval "$(thefuck --alias)"
 # fi
 
+# copy local template files
+for template_path in "$RC__LOCAL"/templates/*; do
+  rc__template_name=$(basename "$template_path")
+  test -f "$RC__LOCAL/$rc__template_name" || cp "$template_path" "$RC__LOCAL/$rc__template_name"
+  unset rc__template_name
+done
+
 . "$RC__SOURCE/warn-missing.sh"
