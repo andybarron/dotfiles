@@ -8,7 +8,8 @@ asdf-vm/asdf path:completions kind:fpath
 mafredri/zsh-async
 sindresorhus/pure kind:fpath
 
-zsh-users/zsh-autosuggestions # inline suggestions
+# https://github.com/zsh-users/zsh-autosuggestions/issues/673
+# zsh-users/zsh-autosuggestions # inline suggestions
 
 ohmyzsh/ohmyzsh path:plugins/fzf
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages

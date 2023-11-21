@@ -21,13 +21,16 @@ zstyle ':antidote:bundle' use-friendly-names 'yes'
 source "$RC__REPOS/antidote/antidote.zsh"
 antidote load
 
+# https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
+ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
+
 if rc__command_exists zoxide; then
   eval "$(zoxide init zsh)"
 fi
 
 if rc__command_exists_optional rustup; then
-  [[ ! -f ~/.zfunc/_rustup ]] && rustup completions zsh > ~/.zfunc/_rustup
-  [[ ! -f ~/.zfunc/_cargo ]] && rustup completions zsh cargo > ~/.zfunc/_cargo
+  [[ ! -f ~/.zfunc/_rustup ]] && rustup completions zsh >~/.zfunc/_rustup
+  [[ ! -f ~/.zfunc/_cargo ]] && rustup completions zsh cargo >~/.zfunc/_cargo
 fi
 
 source "$RC__SOURCE/interactive.sh"
