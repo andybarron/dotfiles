@@ -40,10 +40,10 @@ rc__git_clone() {
   rc__git_repo_name="$(basename "$1" .git)"
   rc__git_repo_path="$RC__REPOS/$rc__git_repo_name"
   if [ ! -d "$RC__REPOS/$rc__git_repo_name" ]; then
-    rc__info "cloning: $1 ..."
-    git clone --quiet "$1" "$rc__git_repo_path" &&
-      rc__info "... cloned into $rc__git_repo_path" ||
-      rc__error "... failed"
+    rc__info "cloning: $1"
+    if ! git clone "$1" "$rc__git_repo_path"; then
+      rc__error "clone failed: $1"
+    fi
   fi
   unset rc__git_repo_name
   unset rc__git_repo_path

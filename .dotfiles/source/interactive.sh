@@ -9,7 +9,7 @@ RC__SOURCE_INTERACTIVE=1
 RC__CLONE_REPOS=$(
   cat <<EOF
 https://github.com/alacritty/alacritty-theme.git
-https://github.com/mattmc3/antidote
+https://github.com/mattmc3/antidote.git
 EOF
 )
 
