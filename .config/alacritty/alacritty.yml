@@ -1,3 +1,5 @@
+import:
+  - ~/.dotfiles/local/repos/alacritty-theme/themes/iterm.yaml
 window:
   opacity: 1.0
   startup_mode: Maximized
