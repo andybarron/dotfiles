@@ -6,21 +6,31 @@
 [ -n "${RC__SOURCE_INTERACTIVE:-""}" ] && return 0
 RC__SOURCE_INTERACTIVE=1
 
+RC__CLONE_REPOS=$(
+  cat <<EOF
+https://github.com/alacritty/alacritty-theme.git
+https://github.com/mattmc3/antidote
+EOF
+)
+
 . "$HOME/.dotfiles/source/env.sh"
 . "$RC__SOURCE/check-interactive.sh"
 . "$RC__SOURCE/helpers.sh"
 . "$RC__SOURCE/aliases.sh"
 
 # set global git config options and aliases
-if rc__command_exists git; then
-  rc__git_set_if_unset user.name "Andy Barron"
-  rc__git_set_if_unset init.defaultbranch main
-  rc__git_set_if_unset push.autoSetupRemote true
-  rc__git_set_if_unset commit.verbose true
-  if rc__command_exists base64; then
-    rc__git_set_if_unset user.email "$(echo "YW5keWJhcnJvbkBwcm90b25tYWlsLmNvbQo=" | base64 --decode)"
-  fi
+rc__git_set_if_unset user.name "Andy Barron"
+rc__git_set_if_unset init.defaultbranch main
+rc__git_set_if_unset push.autoSetupRemote true
+rc__git_set_if_unset commit.verbose true
+if rc__command_exists base64; then
+  rc__git_set_if_unset user.email "$(echo "YW5keWJhcnJvbkBwcm90b25tYWlsLmNvbQo=" | base64 --decode)"
 fi
+
+# clone repos for various tools
+echo "$RC__CLONE_REPOS" | while IFS= read -r repo; do
+  rc__git_clone "$repo"
+done
 
 # ensure dotfiles git config is synced
 git --git-dir="$RC__GIT_DIR" config --local include.path '../.gitconfig'

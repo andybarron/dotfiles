@@ -24,7 +24,7 @@ rc__command_exists() {
 
 # check if command exists, but don't warn if not
 rc__command_exists_optional() {
-  command -v "$1" > /dev/null 2>&1
+  command -v "$1" >/dev/null 2>&1
 }
 
 # set global git config option unless it already has a value
@@ -38,10 +38,15 @@ rc__git_set_if_unset() {
 # it no such directory exists
 rc__git_clone() {
   rc__git_repo_name="$(basename "$1" .git)"
+  rc__git_repo_path="$RC__REPOS/$rc__git_repo_name"
   if [ ! -d "$RC__REPOS/$rc__git_repo_name" ]; then
-    git clone "$1" "$RC__REPOS/$rc__git_repo_name"
+    rc__info "cloning: $1 ..."
+    git clone --quiet "$1" "$rc__git_repo_path" &&
+      rc__info "... cloned into $rc__git_repo_path" ||
+      rc__error "... failed"
   fi
   unset rc__git_repo_name
+  unset rc__git_repo_path
 }
 
 rc__info() {
@@ -70,7 +75,7 @@ if rc__command_exists_optional fortune; then
 
   rc__quote() {
     if [ ! -f "$(rc__quote_path)" ]; then
-      fortune -s > "$(rc__quote_path)"
+      fortune -s >"$(rc__quote_path)"
     fi
 
     if rc__command_exists_optional lolcat; then

@@ -16,14 +16,6 @@ rc__command_exists_optional rc__quote && rc__quote
 mkdir -p ~/.zfunc
 fpath+=~/.zfunc
 
-rc__git_clone https://github.com/mattmc3/antidote.git
-zstyle ':antidote:bundle' use-friendly-names 'yes'
-source "$RC__REPOS/antidote/antidote.zsh"
-antidote load
-
-# https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
-ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
-
 if rc__command_exists zoxide; then
   eval "$(zoxide init zsh)"
 fi
@@ -34,5 +26,12 @@ if rc__command_exists_optional rustup; then
 fi
 
 source "$RC__SOURCE/interactive.sh"
+
+zstyle ':antidote:bundle' use-friendly-names 'yes'
+source "$RC__REPOS/antidote/antidote.zsh"
+antidote load
+
+# https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
+ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
 
 autoload -Uz promptinit && promptinit && prompt pure
