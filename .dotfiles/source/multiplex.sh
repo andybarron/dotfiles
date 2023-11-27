@@ -4,7 +4,8 @@
 # source this file to attach to multiplexer (zellij, tmux)
 # if available and enabled.
 
-test -z "$VSCODE_INJECTION" || return 0
+test "$TERM_PROGRAM" = "vscode" && return 0
+test "$TERM_PROGRAM" = "WezTerm" && return 0
 
 . "$HOME/.dotfiles/source/env.sh"
 . "$RC__SOURCE/check-interactive.sh"
