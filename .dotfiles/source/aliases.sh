@@ -55,4 +55,4 @@ alias undotfiles='unset GIT_DIR GIT_WORK_TREE'
 alias dtf='dotfiles'
 alias undtf='undotfiles'
 
-alias grep='command grep --color auto'
+alias grep='command grep --color=auto'
