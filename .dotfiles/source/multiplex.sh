@@ -17,8 +17,12 @@ if test -n "$RC__ENABLE_ZELLIJ"; then
     exec zellij attach -c default
 fi
 
-if test -n "$RC__ENABLE_TMUX"; then
+if test -n "$RC__TMUX_ATTACH"; then
   rc__command_exists tmux &&
     test -z "$TMUX" &&
-    exec tmux new-session -As default
+    if test -n "$RC__TMUX_CONTROL_MODE"; then
+      exec tmux -CC new-session -As default
+    else
+      exec tmux new-session -As default
+    fi
 fi
