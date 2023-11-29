@@ -56,3 +56,8 @@ alias dtf='dotfiles'
 alias undtf='undotfiles'
 
 alias grep='command grep --color=auto'
+
+# ssh and launch tmux in control mode
+ssht() {
+  ssh "$@" -t "tmux -CC new -A -s 0"
+}
