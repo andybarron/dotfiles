@@ -13,5 +13,6 @@ sindresorhus/pure kind:fpath
 
 ohmyzsh/ohmyzsh path:plugins/fzf
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+ohmyzsh/ohmyzsh path:plugins/ssh-agent
 
 zsh-users/zsh-syntax-highlighting # must be last and not deferred
