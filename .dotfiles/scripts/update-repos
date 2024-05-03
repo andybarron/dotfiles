@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Updating antidote..."
+zsh -c "source '$RC__REPOS/antidote/antidote.zsh' && antidote update"
+
+echo "Updating repos..."
+for repo in "$RC__REPOS"/*; do
+  git -C "$repo" pull --quiet --ff-only
+done
+
+echo "Done :-)"

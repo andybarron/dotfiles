@@ -56,6 +56,10 @@ alias undotfiles='unset GIT_DIR GIT_WORK_TREE'
 alias dtf='dotfiles'
 alias undtf='undotfiles'
 
+# weird quoting due to zsh syntax highlighting bug
+# shellcheck disable=SC2139
+alias dotfiles_update_repos="$RC__SCRIPTS/update-repos"
+
 alias grep='command grep --color=auto'
 
 # ssh and launch tmux in control mode
