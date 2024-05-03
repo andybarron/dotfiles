@@ -9,7 +9,7 @@ mafredri/zsh-async
 sindresorhus/pure kind:fpath
 
 # https://github.com/zsh-users/zsh-autosuggestions/issues/673
-# zsh-users/zsh-autosuggestions # inline suggestions
+zsh-users/zsh-autosuggestions # inline suggestions
 
 ohmyzsh/ohmyzsh path:plugins/fzf
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages
