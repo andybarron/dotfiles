@@ -32,6 +32,9 @@ zstyle ':antidote:bundle' use-friendly-names 'yes'
 source "$RC__REPOS/antidote/antidote.zsh"
 antidote load
 
+# TODO: this is a bad place for this and i'm mad about it
+compdef '_dispatch ssh ssh' ssht
+
 # https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
 ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
 
