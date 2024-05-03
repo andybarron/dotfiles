@@ -50,6 +50,7 @@ alias lat='l -A --tree'
 alias llt='l -l --tree'
 alias lalt='l -Al --tree'
 
+# TODO: do this without polluting env if no command is passed
 alias dotfiles='GIT_DIR="$RC__GIT_DIR" GIT_WORK_TREE="$HOME"'
 alias undotfiles='unset GIT_DIR GIT_WORK_TREE'
 alias dtf='dotfiles'
