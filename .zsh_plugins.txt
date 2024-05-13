@@ -1,4 +1,5 @@
-marlonrichert/zsh-autocomplete # interactive completions
+# https://github.com/marlonrichert/zsh-autocomplete/issues/711
+# marlonrichert/zsh-autocomplete # interactive completions
 
 zsh-users/zsh-completions
 
