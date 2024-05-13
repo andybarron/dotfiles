@@ -28,7 +28,8 @@ fi
 
 source "$RC__SOURCE/interactive.sh"
 
-zstyle ':antidote:bundle' use-friendly-names 'yes'
+zstyle :antidote:bundle use-friendly-names yes
+zstyle :omz:plugins:ssh-agent lazy yes
 source "$RC__REPOS/antidote/antidote.zsh"
 antidote load
 
