@@ -18,10 +18,23 @@ export RC__QUOTES="$RC__LOCAL/quotes"
 export RC__MISSING_COMMANDS=""
 
 # include local binaries e.g. pip installs
-export PATH="$HOME/.local/bin:$PATH"
+RC__LOCAL_BIN="$HOME/.local/bin"
+case ":$PATH:" in
+  *":$RC__LOCAL_BIN:"*) ;;
+  *) export PATH="$RC__LOCAL_BIN:$PATH" ;;
+esac
+
+# cargo
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # include homebrew binaries
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# include pnpm global installs
+export PNPM_HOME="/home/andy/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 
 test -f "$RC__LOCAL/env.sh" && . "$RC__LOCAL/env.sh"
