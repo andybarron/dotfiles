@@ -30,11 +30,15 @@ source "$RC__SOURCE/interactive.sh"
 
 zstyle :antidote:bundle use-friendly-names yes
 zstyle :omz:plugins:ssh-agent lazy yes
+zstyle :omz:plugins:ssh-agent quiet yes
 source "$RC__REPOS/antidote/antidote.zsh"
 antidote load
 
+# required on mac but not linux (weirdly)
+autoload -Uz compinit && compinit
+
 # TODO: this is a bad place for this and i'm mad about it
-autoload -Uz compinit && compinit && compdef '_dispatch ssh ssh' ssht
+compdef '_dispatch ssh ssh' ssht
 
 # https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
 ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
