@@ -17,12 +17,20 @@ export RC__GIT_DIR="$RC__ROOT/.gitbare"
 export RC__QUOTES="$RC__LOCAL/quotes"
 export RC__MISSING_COMMANDS=""
 
+rc__prepend_path() {
+  if [ -z "$1" ]; then
+    echo "skipping empty path entry"
+    return
+  fi
+
+  case ":$PATH:" in
+    *":$1:"*) ;;
+    *) export PATH="$1:$PATH" ;;
+  esac
+}
+
 # include local binaries e.g. pip installs
-RC__LOCAL_BIN="$HOME/.local/bin"
-case ":$PATH:" in
-  *":$RC__LOCAL_BIN:"*) ;;
-  *) export PATH="$RC__LOCAL_BIN:$PATH" ;;
-esac
+rc__prepend_path "$HOME/.local/bin"
 
 # cargo
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
@@ -31,10 +39,8 @@ esac
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # include pnpm global installs
-export PNPM_HOME="/home/andy/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+rc__prepend_path "/home/andy/.local/share/pnpm"
 
 test -f "$RC__LOCAL/env.sh" && . "$RC__LOCAL/env.sh"
+
+unfunction rc__prepend_path
