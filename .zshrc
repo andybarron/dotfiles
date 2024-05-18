@@ -29,8 +29,11 @@ fi
 source "$RC__SOURCE/interactive.sh"
 
 zstyle :antidote:bundle use-friendly-names yes
+
 zstyle :omz:plugins:ssh-agent lazy yes
+zstyle :omz:plugins:ssh-agent lifetime 8h
 zstyle :omz:plugins:ssh-agent quiet yes
+
 source "$RC__REPOS/antidote/antidote.zsh"
 antidote load
 
