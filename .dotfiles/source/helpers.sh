@@ -27,13 +27,6 @@ rc__command_exists_optional() {
   command -v "$1" >/dev/null 2>&1
 }
 
-# set global git config option unless it already has a value
-rc__git_set_if_unset() {
-  if [ -z "$(git config --global --get "$1")" ]; then
-    git config --global "$1" "$2"
-  fi
-}
-
 # clone git repository URL to directory matching repository name,
 # it no such directory exists
 rc__git_clone() {

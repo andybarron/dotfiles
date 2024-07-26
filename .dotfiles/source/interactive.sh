@@ -18,15 +18,6 @@ EOF
 . "$RC__SOURCE/helpers.sh"
 . "$RC__SOURCE/aliases.sh"
 
-# set global git config options and aliases
-rc__git_set_if_unset user.name "Andy Barron"
-rc__git_set_if_unset init.defaultbranch main
-rc__git_set_if_unset push.autoSetupRemote true
-rc__git_set_if_unset commit.verbose true
-if rc__command_exists base64; then
-  rc__git_set_if_unset user.email "$(echo "YW5keWJhcnJvbkBwcm90b25tYWlsLmNvbQo=" | base64 --decode)"
-fi
-
 # clone repos for various tools
 echo "$RC__CLONE_REPOS" | while IFS= read -r repo; do
   rc__git_clone "$repo"
