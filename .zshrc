@@ -115,8 +115,9 @@ function zshrc::init {
   # set up zsh plugins
   zstyle :antidote:bundle use-friendly-names yes
 
+  zstyle :omz:plugins:ssh-agent agent-forwarding yes
   zstyle :omz:plugins:ssh-agent lazy yes
-  zstyle :omz:plugins:ssh-agent lifetime 8h
+  zstyle :omz:plugins:ssh-agent lifetime 12h
   zstyle :omz:plugins:ssh-agent quiet yes
 
   source "$dotfiles__repos_dir/antidote/antidote.zsh"
