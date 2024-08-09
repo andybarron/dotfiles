@@ -1,4 +1,13 @@
-CARGO_ENV="$HOME/.cargo/env"
+typeset -U path PATH
 
-source "$HOME/.dotfiles/source/env.sh"
-test -f "$CARGO_ENV" && source "$CARGO_ENV"
+# local binaries e.g. pip installs
+path+=("$HOME/.local/bin")
+
+# cargo
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+# homebrew binaries
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# local env overrides
+[ -f "$HOME/.override.zshenv" ] && source "$HOME/.override.zshenv"

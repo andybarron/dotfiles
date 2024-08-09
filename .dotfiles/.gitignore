@@ -1,5 +1,1 @@
 .gitbare/
-
-!local/
-local/*
-!local/templates/

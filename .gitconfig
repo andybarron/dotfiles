@@ -1,5 +1,0 @@
-[include]
-	path = ~/.dotfiles/default.gitconfig
-
-[include]
-	path = ~/.dotfiles/local/gitconfig
