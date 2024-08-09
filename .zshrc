@@ -1,5 +1,3 @@
-zmodload zsh/zprof
-
 dotfiles__root_dir="$HOME/.dotfiles"
 dotfiles__repos_dir="$HOME/.tool_repos"
 
@@ -128,9 +126,6 @@ function zshrc::init {
   # local zshrc overrides
   [ -f "$HOME/.override.zshrc" ] && source "$HOME/.override.zshrc"
 
-  # load completions (required on mac but not linux, weirdly)
-  autoload -Uz compinit && compinit
-
   # https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
   # ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
 
@@ -187,5 +182,3 @@ function zshrc::error {
 }
 
 zshrc::init
-
-zprof
