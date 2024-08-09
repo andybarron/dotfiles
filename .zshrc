@@ -1,3 +1,5 @@
+zmodload zsh/zprof
+
 dotfiles__root_dir="$HOME/.dotfiles"
 dotfiles__repos_dir="$HOME/.tool_repos"
 
@@ -185,3 +187,5 @@ function zshrc::error {
 }
 
 zshrc::init
+
+zprof
