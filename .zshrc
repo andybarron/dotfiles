@@ -91,6 +91,7 @@ function zshrc::init {
   alias gundo='git reset HEAD~1'
   alias gredo='git commit --reuse-message ORIG_HEAD'
 
+  alias gparent="$dotfiles__scripts_dir/git_parent"
   alias gsync="$dotfiles__scripts_dir/git_sync"
 
   # ls aliases
