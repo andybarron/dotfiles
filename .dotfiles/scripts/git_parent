@@ -2,12 +2,12 @@
 set -euo pipefail
 
 function git_parent() {
-git show-branch -a 2>/dev/null \
-  | sed "s/].*//" \
-  | grep "\*" \
-  | grep -v "$(git rev-parse --abbrev-ref HEAD)" \
-  | head -n1 \
-  | sed "s/^.*\[//"
+  git show-branch 2>/dev/null \
+    | sed "s/].*//" \
+    | grep "\*" \
+    | grep -v "$(git rev-parse --abbrev-ref HEAD)" \
+    | head -n1 \
+    | sed "s/^.*\[//"
 }
 
-git_parent "$@"
+git_parent

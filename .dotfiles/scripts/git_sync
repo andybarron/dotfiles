@@ -1,15 +1,50 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-function sync_latest_main() {
-  # one-line variable init+assignment swallows errors in commands
+SCRIPT_DIR=$(dirname "$0")
+
+function git_sync() {
+  set -euo pipefail
   local remote
-  local default_branch
+  local current_branch
+  local target_branch
+  local remote_branch
+
   remote=$(git remote)
-  default_branch=$(basename "$(git symbolic-ref refs/remotes/origin/HEAD)")
-  git fetch "$remote" "$default_branch"
-  git rebase "$remote/$default_branch"
+  if [ -z "$remote" ]; then
+    print "No remote found"
+    exit 1
+  fi
+
+  current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+  # support passing in the target branch as an argument
+  target_branch=${1-""}
+  # if no target branch is passed in, try to determine it
+  if [ -z "$target_branch" ]; then
+    target_branch=$("$SCRIPT_DIR/git_parent" || echo)
+  fi
+  # if current branch does not have a parent, use the remote's default branch
+  if [ -z "$target_branch" ]; then
+    target_branch=$(basename "$(git symbolic-ref refs/remotes/"$remote"/HEAD)")
+  fi
+  # if we still don't have a target branch, exit
+  if [ -z "$target_branch" ]; then
+    print "Could not determine target branch"
+    exit 1
+  fi
+
+  remote_branch="$remote/$target_branch"
+  print "Updating $target_branch from $remote_branch"
+  git fetch "$remote" "$target_branch:$target_branch"
+  print "Rebasing $remote_branch onto $current_branch"
+  git rebase "$remote_branch"
+  print "Force pushing $target_branch to $remote_branch"
   git push --force-with-lease
 }
 
-sync_latest_main "$@"
+function print() {
+  echo "$1" >&2
+}
+
+git_sync "$@"
