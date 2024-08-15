@@ -9,7 +9,6 @@ dotfiles__repos=(
   "https://github.com/mattmc3/antidote.git"
 )
 
-
 function zshrc::init {
   # configure zsh options
   HISTFILE=~/.zsh_history
@@ -55,6 +54,11 @@ function zshrc::init {
     alias l='lsd --date=relative'
   else
     alias l='ls -h --color=auto'
+  fi
+
+  # set up direnv if found
+  if zshrc::command_exists direnv; then
+    eval "$(direnv hook zsh)"
   fi
 
   # git aliases
