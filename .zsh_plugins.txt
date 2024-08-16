@@ -17,4 +17,4 @@ ohmyzsh/ohmyzsh path:plugins/ssh-agent
 zsh-users/zsh-syntax-highlighting # must not be deferred
 
 # https://github.com/marlonrichert/zsh-autocomplete/issues/711
-marlonrichert/zsh-autocomplete # interactive completions
+# marlonrichert/zsh-autocomplete # interactive completions
