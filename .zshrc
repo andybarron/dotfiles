@@ -57,7 +57,7 @@ function zshrc::init {
   fi
 
   # set up direnv if found
-  if zshrc::command_exists direnv; then
+  if zshrc::command_exists_optional direnv; then
     eval "$(direnv hook zsh)"
   fi
 
