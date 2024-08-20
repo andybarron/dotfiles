@@ -7,8 +7,8 @@ function git_sync() {
   set -euo pipefail
   local remote
   local current_branch
-  local target_branch
-  local remote_branch
+  local parent_branch
+  local parent_branch_upstream
 
   remote=$(git remote)
   if [ -z "$remote" ]; then
@@ -18,33 +18,45 @@ function git_sync() {
 
   current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-  # support passing in the target branch as an argument
-  target_branch=${1-""}
-  # if no target branch is passed in, try to determine it
-  if [ -z "$target_branch" ]; then
-    target_branch=$("$SCRIPT_DIR/git_parent" || echo)
+  # support passing in the parent branch as an argument
+  parent_branch=${1-""}
+  # if no parent branch is passed in, try to determine it
+  if [ -z "$parent_branch" ]; then
+    parent_branch=$("$SCRIPT_DIR/git_parent" || echo)
   fi
   # if current branch does not have a parent, use the remote's default branch
-  if [ -z "$target_branch" ]; then
-    target_branch=$(basename "$(git symbolic-ref refs/remotes/"$remote"/HEAD)")
+  if [ -z "$parent_branch" ]; then
+    parent_branch=$(basename "$(git symbolic-ref refs/remotes/"$remote"/HEAD)")
   fi
-  # if we still don't have a target branch, exit
-  if [ -z "$target_branch" ]; then
-    print "Could not determine target branch"
+  # if we still don't have a parent branch, exit
+  if [ -z "$parent_branch" ]; then
+    print "Could not determine parent branch"
     exit 1
   fi
 
-  remote_branch="$remote/$target_branch"
-  print "Updating $target_branch from $remote_branch"
-  git fetch "$remote" "$target_branch:$target_branch"
-  print "Rebasing $remote_branch onto $current_branch"
-  git rebase "$remote_branch"
-  print "Force pushing $target_branch to $remote_branch"
+  parent_branch_upstream="$remote/$parent_branch"
+
+  print "Updating $parent_branch from $parent_branch_upstream"
+  git fetch "$remote" "$parent_branch:$parent_branch"
+  print "Rebasing $parent_branch_upstream onto $current_branch"
+  confirm_continue
+  git rebase "$parent_branch_upstream"
+  print "Force pushing $current_branch"
+  confirm_continue
   git push --force-with-lease
 }
 
-function print() {
+print() {
   echo "$1" >&2
+}
+
+confirm_continue() {
+  read -p "Continue? (y/n) " -n 1 -r >&2
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    print "Aborted"
+    return 1
+  fi
 }
 
 git_sync "$@"
