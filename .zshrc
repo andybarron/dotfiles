@@ -11,8 +11,9 @@ dotfiles__repos=(
 
 function zshrc::init {
   # configure zsh options
-  HISTFILE=~/.zsh_history
-  HISTSIZE=1000000
+  HISTFILE="$HOME/.zsh_history"
+  HISTSIZE=100000
+  SAVEHIST=100000
   bindkey -e
   setopt bang_hist
   setopt complete_in_word
