@@ -17,6 +17,10 @@ function init_dotfiles {
   git clone --bare "$git_url" "$HOME/.dotfiles/.gitbare"
   git --git-dir "$HOME/.dotfiles/.gitbare" --work-tree "$HOME" checkout \
     --force
+
+  # configure bare repo not to show untracked files
+  git --git-dir "$HOME/.dotfiles/.gitbare" config --local status.showUntrackedFiles no
+
   exec zsh -i
 }
 
