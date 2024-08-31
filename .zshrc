@@ -132,9 +132,6 @@ function zshrc::init {
   source "$dotfiles__repos_dir/antidote/antidote.zsh"
   antidote load
 
-  # local zshrc overrides
-  [ -f "$HOME/.override.zshrc" ] && source "$HOME/.override.zshrc"
-
   # https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
   # ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
 
@@ -145,6 +142,9 @@ function zshrc::init {
   if [ -n "$dotfiles__missing_commands" ]; then
     zshrc::warn "missing commands: $(echo "$dotfiles__missing_commands" | sort | uniq | tr '\n' ' ')"
   fi
+
+  # local zshrc overrides
+  [ -f "$HOME/.override.zshrc" ] && source "$HOME/.override.zshrc"
 }
 
 ### helpers
