@@ -119,6 +119,7 @@ function zshrc::init {
 
   # other aliases
   alias grep='command grep --color=auto'
+  alias tm='tmux new -As0 || tmux'
 
   # set up zsh plugins
   zstyle :antidote:bundle use-friendly-names yes

@@ -4,6 +4,7 @@ local config = wezterm.config_builder()
 
 config.animation_fps = 60
 config.hide_tab_bar_if_only_one_tab = true
+config.quit_when_all_windows_are_closed = false
 config.use_fancy_tab_bar = false
 
 config.ssh_domains = {
