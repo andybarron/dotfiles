@@ -1,13 +1,10 @@
-dotfiles__root_dir="$HOME/.dotfiles"
-dotfiles__repos_dir="$HOME/.tool_repos"
+dotfiles__root_dir="$HOME/.config/dotfiles"
+dotfiles__repos_dir="$dotfiles__root_dir/repos"
 
 dotfiles__git_dir="$dotfiles__root_dir/.gitbare"
 dotfiles__scripts_dir="$dotfiles__root_dir/scripts"
 
 dotfiles__missing_commands=()
-dotfiles__repos=(
-  "https://github.com/mattmc3/antidote.git"
-)
 
 dotfiles__zdotdir="${ZDOTDIR:-$HOME}"
 
@@ -37,11 +34,6 @@ function zshrc::init {
   if zshrc::command_exists zoxide; then
     eval "$(zoxide init zsh)"
   fi
-
-  # clone repos for various tools
-  for repo_url in $dotfiles__repos; do
-    zshrc::git_clone "$repo_url"
-  done
 
   # set up EDITOR variable
   if zshrc::command_exists nvim; then
@@ -163,20 +155,6 @@ function zshrc::command_exists {
   else
     dotfiles__missing_commands+="$1"
     return 1
-  fi
-}
-
-# clone git repository URL to directory matching repository name,
-# it no such directory exists
-function zshrc::git_clone {
-  local git_repo_name="$(basename "$1" .git)"
-  local git_repo_path="$dotfiles__repos_dir/$git_repo_name"
-  if [ ! -d "$git_repo_path" ]; then
-    zshrc::info "cloning: $1"
-    mkdir -p "$dotfiles__repos_dir"
-    if ! git clone "$1" "$git_repo_path"; then
-      zshrc::error "clone failed: $1"
-    fi
   fi
 }
 
