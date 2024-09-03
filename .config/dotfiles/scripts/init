@@ -15,8 +15,9 @@ function init_dotfiles {
     return 1
   fi
 
-  git clone --bare --recurse-submodules -j4 "$git_url" "$git_dir"
+  git clone --bare "$git_url" "$git_dir"
   git --git-dir "$git_dir" --work-tree "$HOME" checkout --force
+  git --git-dir "$git_dir" --work-tree "$HOME" submodule update --init --recursive
 
   # configure bare repo not to show untracked files
   git --git-dir "$git_dir" config --local status.showUntrackedFiles no
