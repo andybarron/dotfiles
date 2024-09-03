@@ -10,4 +10,4 @@ path+=("$HOME/.local/bin")
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # local env overrides
-[ -f "$HOME/.override.zshenv" ] && source "$HOME/.override.zshenv"
+[ -f "${ZDOTDIR:-$HOME}/.local.zshenv" ] && source "${ZDOTDIR:-$HOME}/.local.zshenv"
