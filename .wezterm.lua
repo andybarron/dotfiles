@@ -7,12 +7,4 @@ config.hide_tab_bar_if_only_one_tab = true
 config.quit_when_all_windows_are_closed = false
 config.use_fancy_tab_bar = false
 
-config.ssh_domains = {
-  {
-    name = 'tomnuc',
-    remote_address = 'home.andybarron.net',
-    username = 'andy',
-  },
-}
-
 return config
