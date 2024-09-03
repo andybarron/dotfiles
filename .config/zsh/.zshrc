@@ -9,9 +9,11 @@ dotfiles__repos=(
   "https://github.com/mattmc3/antidote.git"
 )
 
+dotfiles__zdotdir="${ZDOTDIR:-$HOME}"
+
 function zshrc::init {
   # configure zsh options
-  HISTFILE="$HOME/.zsh_history"
+  HISTFILE="$dotfiles__zdotdir/.zsh_history"
   HISTSIZE=100000
   SAVEHIST=100000
   bindkey -e
