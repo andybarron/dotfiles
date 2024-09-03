@@ -1,2 +1,5 @@
 [font]
 normal = { family = "Hack Nerd Font" }
+
+[window]
+padding = { x = 6, y = 6 }
