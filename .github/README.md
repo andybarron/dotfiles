@@ -4,7 +4,7 @@
     [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts).
 
 1.  ```shell
-    curl -sH 'Cache-Control: no-cache' https://raw.githubusercontent.com/andybarron/dotfiles/main/.dotfiles/scripts/init | bash -s
+    curl -fsSH 'Cache-Control: no-cache' https://raw.githubusercontent.com/andybarron/dotfiles/main/.config/dotfiles/scripts/init | bash -s
     ```
     Append `-- https` to command if SSH or credentials are not available.
 
