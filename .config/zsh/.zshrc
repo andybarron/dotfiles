@@ -2,7 +2,6 @@ dotfiles__root_dir="$HOME/.config/dotfiles"
 dotfiles__repos_dir="$dotfiles__root_dir/repos"
 
 dotfiles__git_dir="$dotfiles__root_dir/.gitbare"
-dotfiles__scripts_dir="$dotfiles__root_dir/scripts"
 
 dotfiles__missing_commands=()
 
@@ -28,7 +27,7 @@ function zshrc::init {
   setopt share_history
 
   # configure git
-  git config --global include.path "~/.dotfiles/default.gitconfig"
+  git config --global include.path "~/.config/dotfiles/git.config"
 
   # load zoxide
   if zshrc::command_exists zoxide; then
@@ -92,9 +91,6 @@ function zshrc::init {
   alias gundo='git reset HEAD~1'
   alias gredo='git commit --reuse-message ORIG_HEAD'
 
-  alias gparent="$dotfiles__scripts_dir/git_parent"
-  alias gsync="$dotfiles__scripts_dir/git_sync"
-
   # ls aliases
   alias la='l -A'
   alias ll='l -l'
@@ -113,7 +109,7 @@ function zshrc::init {
 
   # other aliases
   alias grep='command grep --color=auto'
-  alias tm='tmux new -As0 || tmux'
+  alias tm='tmux new -As0'
 
   # set up zsh plugins
   zstyle :antidote:bundle use-friendly-names yes
@@ -125,9 +121,6 @@ function zshrc::init {
 
   source "$dotfiles__repos_dir/antidote/antidote.zsh"
   antidote load
-
-  # https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
-  # ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
 
   # load pure prompt
   autoload -Uz promptinit && promptinit && prompt pure
@@ -145,7 +138,7 @@ function zshrc::init {
 
 # check if command exists, but don't warn if not
 function zshrc::command_exists_optional {
-  command -v "$1" >/dev/null 2>&1
+  command -v "$1" &>/dev/null
 }
 
 # check if command exists; if not, add to missing commands list
