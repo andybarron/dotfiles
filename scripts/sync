@@ -7,8 +7,20 @@ set -euo pipefail
 # - dry run deletion: -Dnv
 
 cd ~/.dotfiles/packages
-# shellcheck disable=SC2035
-stow -t ~ --no-folding "$@" *
+echo "pwd: $(pwd)"
+
+# load all directories in cwd into packages
+packages=()
+for package in */; do
+  packages+=("$(basename "$package")")
+done
+
+stow_args=(-t ~ --no-folding "$@" "${packages[@]}")
+echo stow "${stow_args[@]}"
+
+stow "${stow_args[@]}"
 
 # remove bogus symlinks in ~/.config
-find ~/.config -type l ! -exec test -e {} \; -delete
+find_args=(~/.config -type l ! -exec test -e {} \; -delete)
+echo find "${find_args[@]}"
+find "${find_args[@]}"
