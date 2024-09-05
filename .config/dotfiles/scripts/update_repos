@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-# TODO: Pull with submodules?
-echo "TODO: Unimplemented" 2>&1
-exit 1

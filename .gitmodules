@@ -1,6 +1,0 @@
-[submodule ".config/dotfiles/repos/antidote"]
-	path = .config/dotfiles/repos/antidote
-	url = https://github.com/mattmc3/antidote
-[submodule ".config/dotfiles/repos/alacritty-theme"]
-	path = .config/dotfiles/repos/alacritty-theme
-	url = https://github.com/alacritty/alacritty-theme

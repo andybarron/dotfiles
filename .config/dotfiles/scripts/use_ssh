@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-git --git-dir "$HOME/.config/dotfiles/.gitbare" remote set-url origin \
-  git@github.com:andybarron/dotfiles.git
