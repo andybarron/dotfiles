@@ -156,7 +156,7 @@ function zshrc::init {
   fi
 
   # local zshrc overrides
-  [ -f "$ZDOTDIR/.local.zshrc" ] && source "$ZDOTDIR/.local.zshrc"
+  [ -f "$ZDOTDIR/.zshrc.local.zsh" ] && source "$ZDOTDIR/.zshrc.local.zsh"
 
   # if homebrew exists, use package completions
   if zshrc::command_exists_optional brew; then

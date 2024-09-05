@@ -8,4 +8,7 @@ set -euo pipefail
 
 cd ~/.dotfiles/packages
 # shellcheck disable=SC2035
-stow -t ~ "$@" *
+stow -t ~ --no-folding "$@" *
+
+# remove bogus symlinks in ~/.config
+find ~/.config -type l ! -exec test -e {} \; -delete
