@@ -166,6 +166,8 @@ function zshrc::init {
   # load completions
   autoload -Uz compinit
   compinit
+
+  ~/.config/zsh/quote.zsh || true
 }
 
 ### helpers
