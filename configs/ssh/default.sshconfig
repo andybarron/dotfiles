@@ -1,0 +1,19 @@
+# enable this config by adding the following line to
+# the TOP of the SSH config file (~/.ssh/config):
+#
+# Include ~/.dotfiles/configs/ssh/default.sshconfig
+
+# TODO: Add it automatically?
+
+Host tomnuc
+  HostName home.andybarron.net
+
+Host tomnuc tomnuc.local
+  User andy
+  ForwardAgent yes
+
+Host *
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/personal/id_ed25519
+  IdentitiesOnly yes

@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+
+# script args are passed to stow.
+# - dry run: -nv
+# - delete symlinks: -D
+# - dry run deletion: -Dnv
+
+cd ~/.dotfiles/packages
+# shellcheck disable=SC2035
+stow -t ~ "$@" *

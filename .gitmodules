@@ -1,0 +1,24 @@
+[submodule "repos/alacritty-theme"]
+	path = repos/alacritty-theme
+	url = https://github.com/alacritty/alacritty-theme
+[submodule "repos/pure"]
+	path = repos/pure
+	url = https://github.com/sindresorhus/pure
+[submodule "repos/asdf"]
+	path = repos/asdf
+	url = https://github.com/asdf-vm/asdf.git
+[submodule "repos/zsh-syntax-highlighting"]
+	path = repos/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "repos/zsh-completions"]
+	path = repos/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions
+[submodule "repos/zsh-autosuggestions"]
+	path = repos/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "repos/zsh-autocomplete"]
+	path = repos/zsh-autocomplete
+	url = https://github.com/marlonrichert/zsh-autocomplete
+[submodule "repos/ohmyzsh"]
+	path = repos/ohmyzsh
+	url = https://github.com/ohmyzsh/ohmyzsh

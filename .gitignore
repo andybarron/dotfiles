@@ -1,0 +1,13 @@
+### zsh
+# ignore everything by default
+/packages/zsh/.config/zsh/*
+
+# allow *.zsh files, but nothing tagged as local only
+!/packages/zsh/.config/zsh/*.zsh
+/packages/zsh/.config/zsh/.local.*
+/packages/zsh/.config/zsh/*.local.*
+/packages/zsh/.config/zsh/*.local
+
+# obviously allow the main config files
+!/packages/zsh/.config/zsh/.zshenv
+!/packages/zsh/.config/zsh/.zshrc
