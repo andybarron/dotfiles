@@ -15,7 +15,7 @@ function refresh_quote {
   fi
   quote=$(echo "$json" | jq -r '.[0].q')
   author=$(echo "$json" | jq -r '.[0].a')
-  text="$quote\n~ $author"
+  text=$(echo "$quote\n~ $author" | fold -sw 60)
   if command -v lolcat &>/dev/null; then
     text=$(echo "$text" | lolcat -f --seed=$(date "+%Y%m%d"))
   fi
