@@ -1,3 +1,5 @@
+zmodload zsh/zprof
+
 dotfiles__repos_dir="$HOME/.dotfiles/repos"
 
 dotfiles__missing_commands=()
@@ -105,13 +107,30 @@ function zshrc::init {
 
   # set up zsh plugins
 
-  # zsh autocomplete (interactive drop-down completions)
-  # https://github.com/marlonrichert/zsh-autocomplete
-  # "near the top, before any calls to compinit"
-  . "$dotfiles__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+  # zsh syntax highlighting
+  . "$dotfiles__repos_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+  # https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
+  ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
 
   # zsh completions
   fpath+="$dotfiles__repos_dir/zsh-completions/src"
+
+  # asdf completions
+  fpath+="$ASDF_DIR/completions"
+
+  # if homebrew exists, use package completions
+  if zshrc::command_exists_optional brew; then
+    fpath+=$(brew --prefix)/share/zsh/site-functions
+  fi
+
+  # zsh autocomplete (interactive drop-down completions)
+  # https://github.com/marlonrichert/zsh-autocomplete
+  # "near the top, before any calls to compinit"
+  # must be after syntax highlighting:
+  # https://github.com/zsh-users/zsh-syntax-highlighting/issues/951
+  # calls compinit, so should be after fpath modifications:
+  # https://www.reddit.com/r/zsh/comments/gk2c91/comment/kpjmntg
+  . "$dotfiles__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 
   # TODO: decide on this -- useful but false positives e.g. git commits
   # also: https://github.com/zsh-users/zsh-autosuggestions/issues/751
@@ -120,12 +139,6 @@ function zshrc::init {
 
   # asdf
   . "$dotfiles__repos_dir/asdf/asdf.sh"
-  fpath+="$ASDF_DIR/completions"
-
-  # zsh syntax highlighting
-  . "$dotfiles__repos_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-  # https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
-  ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
 
   # omz plugin: fzf
   # should be loaded after zsh-autocomplete because they use the same key bindings
@@ -140,8 +153,7 @@ function zshrc::init {
   . "$dotfiles__repos_dir/ohmyzsh/plugins/ssh-agent/ssh-agent.plugin.zsh"
 
   # omz plugin: colored-man-pages
-  autoload -Uz colors
-  colors
+  autoload -Uz colors && colors
   . "$dotfiles__repos_dir/ohmyzsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
   # load pure prompt
@@ -157,15 +169,6 @@ function zshrc::init {
 
   # local zshrc overrides
   [ -f "$ZDOTDIR/.zshrc.local.zsh" ] && source "$ZDOTDIR/.zshrc.local.zsh"
-
-  # if homebrew exists, use package completions
-  if zshrc::command_exists_optional brew; then
-    fpath+=$(brew --prefix)/share/zsh/site-functions
-  fi
-
-  # load completions
-  autoload -Uz compinit
-  compinit
 
   ~/.config/zsh/quote.zsh || true
 }
