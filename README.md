@@ -21,5 +21,5 @@ will print warnings on startup._
 
 ```sh
 git clone --recurse-submodules -j4 git@github.com:andybarron/dotfiles.git ~/.dotfiles
-~/.dotfiles/scripts/sync
+~/.dotfiles/scripts/sync && exec zsh -i
 ```

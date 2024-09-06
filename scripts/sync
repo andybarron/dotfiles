@@ -7,7 +7,29 @@ set -euo pipefail
 # - dry run deletion: -Dnv
 
 cd ~/.dotfiles/packages
-echo "pwd: $(pwd)"
+
+# on apple silicon, homebrew installs to `/opt/homebrew/bin`. this directory
+# is not in $PATH by default. `.zshenv` adds it to $PATH, but our `.zshenv`
+# won't exist until after `stow` is run!
+# workaround: if `brew` is not found, but `/opt/homebrew/bin` exists, run
+# `brew shellenv` to add it to the PATH. this is only necessary during initial
+# setup on apple silicon.
+if [[ "${OSTYPE:-}" == darwin* ]] && ! command -v stow &>/dev/null; then
+  # if brew command is not found but /opt/homebrew/bin exists, run brew shellenv
+  if ! command -v brew &>/dev/null && [[ -d /opt/homebrew/bin ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+  # if brew is still not found, error
+  if ! command -v brew &>/dev/null; then
+    echo "brew not found" 1>&2
+    exit 1
+  fi
+fi
+
+if ! command -v stow &>/dev/null; then
+  echo "stow not found" 1>&2
+  exit 1
+fi
 
 # load all directories in cwd into packages
 packages=()
@@ -15,12 +37,7 @@ for package in */; do
   packages+=("$(basename "$package")")
 done
 
-stow_args=(-t ~ --no-folding "$@" "${packages[@]}")
-echo stow "${stow_args[@]}"
-
-stow "${stow_args[@]}"
+stow -t ~ --no-folding "$@" "${packages[@]}"
 
 # remove bogus symlinks in ~/.config
-find_args=(~/.config -type l ! -exec test -e {} \; -delete)
-echo find "${find_args[@]}"
-find "${find_args[@]}"
+find ~/.config -type l ! -exec test -e {} \; -delete
