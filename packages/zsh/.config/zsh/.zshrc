@@ -1,9 +1,11 @@
 zmodload zsh/zprof
 
-dotfiles__repos_dir="$HOME/.dotfiles/repos"
+zshrc__repos_dir="$HOME/.dotfiles/repos"
 
-dotfiles__missing_commands=()
-typeset -U dotfiles__missing_commands
+zshrc__missing_commands=()
+typeset -U zshrc__missing_commands
+
+zshrc__completions="$HOME/.cache/zshrc/completions"
 
 ZDOTDIR="${ZDOTDIR:-$HOME}"
 
@@ -48,6 +50,7 @@ function zshrc::init {
   # support arguments.
   if [[ "$TERM_PROGRAM" == "vscode" ]] && command -v code &>/dev/null; then
     export VISUAL="$HOME/.config/zsh/code.zsh"
+    alias v="$HOME/.config/zsh/code.zsh"
   fi
 
   # set up lsd if found
@@ -116,12 +119,12 @@ function zshrc::init {
   # set up zsh plugins
 
   # zsh syntax highlighting
-  . "$dotfiles__repos_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+  . "$zshrc__repos_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
   # https://github.com/zsh-users/zsh-syntax-highlighting/issues/510
   ZSH_HIGHLIGHT_STYLES[comment]="fg=8,bold"
 
   # zsh completions
-  fpath+="$dotfiles__repos_dir/zsh-completions/src"
+  fpath+="$zshrc__repos_dir/zsh-completions/src"
 
   # asdf completions
   fpath+="$ASDF_DIR/completions"
@@ -131,6 +134,13 @@ function zshrc::init {
     fpath+=$(brew --prefix)/share/zsh/site-functions
   fi
 
+  # generated completions
+  mkdir -p "$zshrc__completions"
+  fpath+="$zshrc__completions"
+  zshrc::command_completions docker 'docker completion zsh'
+  zshrc::command_completions rustup 'rustup completions zsh'
+  zshrc::command_completions cargo 'rustup completions zsh cargo'
+
   # zsh autocomplete (interactive drop-down completions)
   # https://github.com/marlonrichert/zsh-autocomplete
   # "near the top, before any calls to compinit"
@@ -138,7 +148,7 @@ function zshrc::init {
   # https://github.com/zsh-users/zsh-syntax-highlighting/issues/951
   # calls compinit, so should be after fpath modifications:
   # https://www.reddit.com/r/zsh/comments/gk2c91/comment/kpjmntg
-  . "$dotfiles__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+  . "$zshrc__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 
   # make tab and shift+tab enter menu from command line
   bindkey '^I' menu-select
@@ -152,11 +162,11 @@ function zshrc::init {
   zstyle ':autocomplete:*' delay 0.1
 
   # asdf
-  . "$dotfiles__repos_dir/asdf/asdf.sh"
+  . "$zshrc__repos_dir/asdf/asdf.sh"
 
   # omz plugin: fzf
   # should be loaded after zsh-autocomplete because they use the same key bindings
-  . "$dotfiles__repos_dir/ohmyzsh/plugins/fzf/fzf.plugin.zsh"
+  . "$zshrc__repos_dir/ohmyzsh/plugins/fzf/fzf.plugin.zsh"
   zshrc::command_exists fzf || true # include fzf in missing commands if not found
 
   # omz plugin: ssh-agent
@@ -164,21 +174,21 @@ function zshrc::init {
   zstyle :omz:plugins:ssh-agent lazy yes
   zstyle :omz:plugins:ssh-agent lifetime 12h
   zstyle :omz:plugins:ssh-agent quiet yes
-  . "$dotfiles__repos_dir/ohmyzsh/plugins/ssh-agent/ssh-agent.plugin.zsh"
+  . "$zshrc__repos_dir/ohmyzsh/plugins/ssh-agent/ssh-agent.plugin.zsh"
 
   # omz plugin: colored-man-pages
   autoload -Uz colors && colors
-  . "$dotfiles__repos_dir/ohmyzsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
+  . "$zshrc__repos_dir/ohmyzsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
   # load pure prompt
-  fpath+="$dotfiles__repos_dir/pure"
+  fpath+="$zshrc__repos_dir/pure"
   autoload -Uz promptinit &&
     promptinit &&
     prompt pure
 
   # warn missing commands
-  if [ -n "$dotfiles__missing_commands" ]; then
-    zshrc::warn "missing commands: $(echo "$dotfiles__missing_commands" | sort | tr '\n' ' ')"
+  if [ -n "$zshrc__missing_commands" ]; then
+    zshrc::warn "missing commands: $(echo "$zshrc__missing_commands" | sort | tr '\n' ' ')"
   fi
 
   # local zshrc overrides
@@ -199,8 +209,17 @@ function zshrc::command_exists {
   if zshrc::command_exists_optional "$1"; then
     return 0
   else
-    dotfiles__missing_commands+="$1"
+    zshrc__missing_commands+="$1"
     return 1
+  fi
+}
+
+function zshrc::command_completions {
+  local command="$1"
+  local completion="${@:2}"
+  local output="$zshrc__completions/_$command"
+  if zshrc::command_exists_optional "$command" && ! test -f "$output"; then
+    eval "$completion" >"$output"
   fi
 }
 
