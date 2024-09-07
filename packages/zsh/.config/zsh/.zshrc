@@ -3,6 +3,7 @@ zmodload zsh/zprof
 dotfiles__repos_dir="$HOME/.dotfiles/repos"
 
 dotfiles__missing_commands=()
+typeset -U dotfiles__missing_commands
 
 ZDOTDIR="${ZDOTDIR:-$HOME}"
 
@@ -33,13 +34,20 @@ function zshrc::init {
     eval "$(zoxide init zsh)"
   fi
 
-  # set up EDITOR variable
+  # set editor variable
   if zshrc::command_exists nvim; then
     export VISUAL=nvim
     alias v=nvim
   else
     export VISUAL=vim
     alias v=vim
+  fi
+
+  # if we're in a vscode terminal, set editor to code wait mode.
+  # we wrap code in a script because the VISUAL variable does not
+  # support arguments.
+  if [[ "$TERM_PROGRAM" == "vscode" ]] && command -v code &>/dev/null; then
+    export VISUAL="$HOME/.config/zsh/code.zsh"
   fi
 
   # set up lsd if found
@@ -132,9 +140,10 @@ function zshrc::init {
   # https://www.reddit.com/r/zsh/comments/gk2c91/comment/kpjmntg
   . "$dotfiles__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 
-  # TODO: decide on this -- useful but false positives e.g. git commits
-  # also: https://github.com/zsh-users/zsh-autosuggestions/issues/751
+  # TODO: enable when compatbility with zsh-autocomplete is fixed
+  # https://github.com/zsh-users/zsh-autosuggestions/issues/751
   # zsh autosuggestions (same-line arrow-key suggestions)
+  # ZSH_AUTOSUGGEST_STRATEGY=(completion)
   # . "$dotfiles__repos_dir/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
   # asdf
@@ -158,13 +167,13 @@ function zshrc::init {
 
   # load pure prompt
   fpath+="$dotfiles__repos_dir/pure"
-  autoload -Uz promptinit
-  promptinit
-  prompt pure
+  autoload -Uz promptinit &&
+    promptinit &&
+    prompt pure
 
   # warn missing commands
   if [ -n "$dotfiles__missing_commands" ]; then
-    zshrc::warn "missing commands: $(echo "$dotfiles__missing_commands" | sort | uniq | tr '\n' ' ')"
+    zshrc::warn "missing commands: $(echo "$dotfiles__missing_commands" | sort | tr '\n' ' ')"
   fi
 
   # local zshrc overrides
