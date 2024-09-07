@@ -140,6 +140,17 @@ function zshrc::init {
   # https://www.reddit.com/r/zsh/comments/gk2c91/comment/kpjmntg
   . "$dotfiles__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 
+  # make tab and shift+tab enter menu from command line
+  bindkey '^I' menu-select
+  bindkey "$terminfo[kcbt]" menu-select
+  # make tab and shift+tab cycle through completions in menu
+  bindkey -M menuselect '^I' menu-complete
+  bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
+  # make enter submit command line
+  bindkey -M menuselect '^M' .accept-line
+  # customize delay before menu appears
+  zstyle ':autocomplete:*' delay 0.1
+
   # asdf
   . "$dotfiles__repos_dir/asdf/asdf.sh"
 
