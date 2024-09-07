@@ -13,9 +13,6 @@
 [submodule "repos/zsh-completions"]
 	path = repos/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
-[submodule "repos/zsh-autosuggestions"]
-	path = repos/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
 [submodule "repos/zsh-autocomplete"]
 	path = repos/zsh-autocomplete
 	url = https://github.com/marlonrichert/zsh-autocomplete

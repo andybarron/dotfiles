@@ -140,12 +140,6 @@ function zshrc::init {
   # https://www.reddit.com/r/zsh/comments/gk2c91/comment/kpjmntg
   . "$dotfiles__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 
-  # TODO: enable when compatbility with zsh-autocomplete is fixed
-  # https://github.com/zsh-users/zsh-autosuggestions/issues/751
-  # zsh autosuggestions (same-line arrow-key suggestions)
-  # ZSH_AUTOSUGGEST_STRATEGY=(completion)
-  # . "$dotfiles__repos_dir/zsh-autosuggestions/zsh-autosuggestions.zsh"
-
   # asdf
   . "$dotfiles__repos_dir/asdf/asdf.sh"
 
