@@ -83,7 +83,8 @@ function zshrc::init {
   alias gl='git log'
   alias glo='git log --oneline'
 
-  alias gst='git status'
+  alias gs='git status'
+  alias gst='git status' # muscle memory...
 
   alias gsw='git switch'
   alias gswc='git switch -c'
@@ -97,6 +98,7 @@ function zshrc::init {
   alias gredo='git commit --reuse-message ORIG_HEAD'
 
   # ls aliases
+  # flag suffixes are in alphabetical order for my own sanity @_@
   alias la='l -A'
   alias ll='l -l'
   alias lt='l --tree'
@@ -187,11 +189,16 @@ function zshrc::init {
   autoload -Uz colors && colors
   . "$zshrc__repos_dir/ohmyzsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
+  # TODO: decide on prompt
+
   # load pure prompt
-  fpath+="$zshrc__repos_dir/pure"
-  autoload -Uz promptinit &&
-    promptinit &&
-    prompt pure
+  # fpath+="$zshrc__repos_dir/pure"
+  # autoload -Uz promptinit &&
+  #   promptinit &&
+  #   prompt pure
+
+  # load spaceship prompt
+  . "$zshrc__repos_dir/spaceship-prompt/spaceship.zsh"
 
   # warn missing commands
   if [ -n "$zshrc__missing_commands" ]; then
@@ -233,7 +240,7 @@ function zshrc::command_completions {
 ### logging
 
 function zshrc::info {
-  printf "\e[106m\e[30m[info ]\e[m \e[96m%s\e[m\n" "$*" >&2
+  printf "\e[106m\e[30m[info ]\e[m \e[96m%s\e[m\n" "$@" >&2
 }
 function zshrc::warn {
   printf "\e[43m\e[30m[warn ]\e[m \e[33m%s\e[m\n" "$@" >&2

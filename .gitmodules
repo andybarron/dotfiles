@@ -19,3 +19,6 @@
 [submodule "repos/ohmyzsh"]
 	path = repos/ohmyzsh
 	url = https://github.com/ohmyzsh/ohmyzsh
+[submodule "repos/spaceship-prompt"]
+	path = repos/spaceship-prompt
+	url = https://github.com/spaceship-prompt/spaceship-prompt.git
