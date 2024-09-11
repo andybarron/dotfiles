@@ -31,11 +31,6 @@ function zshrc::init {
   # configure git
   git config --global include.path "~/.dotfiles/configs/git/default.gitconfig"
 
-  # load zoxide
-  if zshrc::command_exists zoxide; then
-    eval "$(zoxide init zsh)"
-  fi
-
   # set editor variable
   if zshrc::command_exists nvim; then
     export VISUAL=nvim
@@ -149,6 +144,18 @@ function zshrc::init {
   # calls compinit, so should be after fpath modifications:
   # https://www.reddit.com/r/zsh/comments/gk2c91/comment/kpjmntg
   . "$zshrc__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+
+  # load zoxide
+  # must be after compinit for completions to work
+  if zshrc::command_exists zoxide; then
+    eval "$(zoxide init zsh --hook prompt)"
+    # i don't love this, but it ensures zoxide gets directory
+    # usage info even if i forget to use the z command
+    alias cd=z
+  else
+    # muscle memory :)
+    alias z=cd
+  fi
 
   # make tab and shift+tab enter menu from command line
   bindkey '^I' menu-select
