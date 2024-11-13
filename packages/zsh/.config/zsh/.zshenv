@@ -14,7 +14,7 @@ path+=("$HOME/.local/bin")
 [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
 
 # homebrew binaries
-[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+[ -d /opt/homebrew/bin ] && path=("/opt/homebrew/bin" $path)
 
 # local env overrides
 [ -f "${ZDOTDIR:-$HOME}/.local.zshenv" ] && source "${ZDOTDIR:-$HOME}/.local.zshenv"

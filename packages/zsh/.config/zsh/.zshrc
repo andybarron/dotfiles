@@ -128,7 +128,7 @@ function zshrc::init {
 
   # if homebrew exists, use package completions
   if zshrc::command_exists_optional brew; then
-    fpath+=$(brew --prefix)/share/zsh/site-functions
+    eval $(brew shellenv)
   fi
 
   # generated completions
