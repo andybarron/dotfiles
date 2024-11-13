@@ -10,6 +10,9 @@ path+=("$HOME/.local/bin")
 # cargo
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
+# add rvm to path (if installed)
+[ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
+
 # homebrew binaries
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
