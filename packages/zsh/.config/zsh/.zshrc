@@ -138,6 +138,11 @@ function zshrc::init {
   zshrc::command_completions rustup 'rustup completions zsh'
   zshrc::command_completions cargo 'rustup completions zsh cargo'
 
+  # disable zsh confirmation prompt for long completion lists
+  # https://unix.stackexchange.com/a/30092
+  zstyle ':completion:*' list-prompt ''
+  zstyle ':completion:*' select-prompt ''
+
   # zsh autocomplete (interactive drop-down completions)
   # https://github.com/marlonrichert/zsh-autocomplete
   # "near the top, before any calls to compinit"
