@@ -123,8 +123,10 @@ function zshrc::init {
   # zsh completions
   fpath+="$zshrc__repos_dir/zsh-completions/src"
 
-  # asdf completions
-  fpath+="$ASDF_DIR/completions"
+  # TODO: asdf's docs on completions are out of date :(
+  #       also ASDF_DIR is not set at this point
+  # # asdf completions
+  # fpath+="$ASDF_DIR/completions"
 
   # if homebrew exists, use package completions
   if zshrc::command_exists_optional brew; then
