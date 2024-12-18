@@ -1,3 +1,4 @@
+[general]
 import = ["~/.dotfiles/repos/alacritty-theme/themes/alabaster_dark.toml"]
 
 [font]
