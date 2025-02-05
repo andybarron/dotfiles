@@ -123,10 +123,11 @@ function zshrc::init {
   # zsh completions
   fpath+="$zshrc__repos_dir/zsh-completions/src"
 
-  # TODO: asdf's docs on completions are out of date :(
-  #       also ASDF_DIR is not set at this point
-  # # asdf completions
-  # fpath+="$ASDF_DIR/completions"
+  if zshrc::command_exists asdf; then
+    mkdir -p "${ASDF_DATA_DIR:-$HOME/.asdf}/completions"
+    asdf completion zsh >"${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf"
+    fpath+="${ASDF_DATA_DIR:-$HOME/.asdf}/completions"
+  fi
 
   # if homebrew exists, use package completions
   if zshrc::command_exists_optional brew; then
@@ -176,9 +177,6 @@ function zshrc::init {
   bindkey -M menuselect '^M' .accept-line
   # customize delay before menu appears
   zstyle ':autocomplete:*' delay 0.1
-
-  # asdf
-  . "$zshrc__repos_dir/asdf/asdf.sh"
 
   # omz plugin: fzf
   # should be loaded after zsh-autocomplete because they use the same key bindings

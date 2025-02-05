@@ -4,9 +4,6 @@
 [submodule "repos/pure"]
 	path = repos/pure
 	url = https://github.com/sindresorhus/pure
-[submodule "repos/asdf"]
-	path = repos/asdf
-	url = https://github.com/asdf-vm/asdf.git
 [submodule "repos/zsh-syntax-highlighting"]
 	path = repos/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
