@@ -1,3 +1,6 @@
+# https://gist.github.com/Linerre/f11ad4a6a934dcf01ee8415c9457e7b2
+# TLDR: path_helper is weird on mac, so avoid .zshenv
+
 typeset -U path PATH fpath FPATH # prevent duplicates
 
 # handled manually in .zshrc, or by zsh-autocomplete

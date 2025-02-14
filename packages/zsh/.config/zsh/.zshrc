@@ -1,13 +1,15 @@
 zmodload zsh/zprof
 
+ZDOTDIR="${ZDOTDIR:-$HOME}"
+
+source "$ZDOTDIR/env.zsh"
+
 zshrc__repos_dir="$HOME/.dotfiles/repos"
 
 zshrc__missing_commands=()
 typeset -U zshrc__missing_commands
 
 zshrc__completions="$HOME/.cache/zshrc/completions"
-
-ZDOTDIR="${ZDOTDIR:-$HOME}"
 
 function zshrc::init {
   # configure zsh options
