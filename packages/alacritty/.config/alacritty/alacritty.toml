@@ -1,8 +1,0 @@
-[general]
-import = ["~/.dotfiles/repos/alacritty-theme/themes/alabaster_dark.toml"]
-
-[font]
-normal = { family = "Hack Nerd Font" }
-
-[window]
-padding = { x = 6, y = 6 }
