@@ -46,8 +46,8 @@ function zshrc::init {
   # we wrap code in a script because the VISUAL variable does not
   # support arguments.
   if [[ "$TERM_PROGRAM" == "vscode" ]] && command -v code &>/dev/null; then
-    export VISUAL="$HOME/.config/zsh/code.zsh"
-    alias v="$HOME/.config/zsh/code.zsh"
+    export VISUAL="$ZDOTDIR/code.zsh"
+    alias v="$ZDOTDIR/code.zsh"
   fi
 
   # set up lsd if found
@@ -182,8 +182,9 @@ function zshrc::init {
 
   # omz plugin: fzf
   # should be loaded after zsh-autocomplete because they use the same key bindings
-  . "$zshrc__repos_dir/ohmyzsh/plugins/fzf/fzf.plugin.zsh"
-  zshrc::command_exists fzf || true # include fzf in missing commands if not found
+  if zshrc::command_exists fzf; then
+    . "$zshrc__repos_dir/ohmyzsh/plugins/fzf/fzf.plugin.zsh"
+  fi
 
   # omz plugin: ssh-agent
   zstyle :omz:plugins:ssh-agent agent-forwarding yes
@@ -216,7 +217,7 @@ function zshrc::init {
   local host_zshrc_override="$ZDOTDIR/.zshrc.$(hostname).zsh"
   [ -f "$host_zshrc_override" ] && source "$host_zshrc_override"
 
-  ~/.config/zsh/quote.zsh || true
+  "$ZDOTDIR/quote.zsh" || true
 }
 
 ### helpers
