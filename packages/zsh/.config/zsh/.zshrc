@@ -213,7 +213,8 @@ function zshrc::init {
   fi
 
   # local zshrc overrides
-  [ -f "$ZDOTDIR/.zshrc.local.zsh" ] && source "$ZDOTDIR/.zshrc.local.zsh"
+  local host_zshrc_override="$ZDOTDIR/.zshrc.$(hostname).zsh"
+  [ -f "$host_zshrc_override" ] && source "$host_zshrc_override"
 
   ~/.config/zsh/quote.zsh || true
 }
