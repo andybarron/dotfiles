@@ -197,14 +197,6 @@ function zshrc::init {
   autoload -Uz colors && colors
   . "$zshrc__repos_dir/ohmyzsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
-  # TODO: decide on prompt
-
-  # load pure prompt
-  # fpath+="$zshrc__repos_dir/pure"
-  # autoload -Uz promptinit &&
-  #   promptinit &&
-  #   prompt pure
-
   # load spaceship prompt
   . "$zshrc__repos_dir/spaceship-prompt/spaceship.zsh"
 
