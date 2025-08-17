@@ -148,14 +148,15 @@ function zshrc::init {
   zstyle ':completion:*' list-prompt ''
   zstyle ':completion:*' select-prompt ''
 
-  # zsh autocomplete (interactive drop-down completions)
-  # https://github.com/marlonrichert/zsh-autocomplete
-  # "near the top, before any calls to compinit"
-  # must be after syntax highlighting:
-  # https://github.com/zsh-users/zsh-syntax-highlighting/issues/951
-  # calls compinit, so should be after fpath modifications:
-  # https://www.reddit.com/r/zsh/comments/gk2c91/comment/kpjmntg
-  . "$zshrc__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+  # ! Disabled because it's buggy nonsense (psql was freezing entire terminal, wtf?)
+  # # zsh autocomplete (interactive drop-down completions)
+  # # https://github.com/marlonrichert/zsh-autocomplete
+  # # "near the top, before any calls to compinit"
+  # # must be after syntax highlighting:
+  # # https://github.com/zsh-users/zsh-syntax-highlighting/issues/951
+  # # calls compinit, so should be after fpath modifications:
+  # # https://www.reddit.com/r/zsh/comments/gk2c91/comment/kpjmntg
+  # . "$zshrc__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 
   # load zoxide
   # must be after compinit for completions to work
@@ -169,16 +170,17 @@ function zshrc::init {
     alias z=cd
   fi
 
-  # make tab and shift+tab enter menu from command line
-  bindkey '^I' menu-select
-  bindkey "$terminfo[kcbt]" menu-select
-  # make tab and shift+tab cycle through completions in menu
-  bindkey -M menuselect '^I' menu-complete
-  bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
-  # make enter submit command line
-  bindkey -M menuselect '^M' .accept-line
-  # customize delay before menu appears
-  zstyle ':autocomplete:*' delay 0.1
+  # ! Disabled along with autocomplete above
+  # # make tab and shift+tab enter menu from command line
+  # bindkey '^I' menu-select
+  # bindkey "$terminfo[kcbt]" menu-select
+  # # make tab and shift+tab cycle through completions in menu
+  # bindkey -M menuselect '^I' menu-complete
+  # bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
+  # # make enter submit command line
+  # bindkey -M menuselect '^M' .accept-line
+  # # customize delay before menu appears
+  # zstyle ':autocomplete:*' delay 0.1
 
   # omz plugin: fzf
   # should be loaded after zsh-autocomplete because they use the same key bindings
