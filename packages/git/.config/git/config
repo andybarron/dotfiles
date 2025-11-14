@@ -9,6 +9,7 @@
 	verbose = true
 [core]
 	pager = less -+FX
+	excludesFile = /Users/andy/.config/git/global.gitignore
 
 [include]
 	path = ~/.config/git/local.gitconfig
