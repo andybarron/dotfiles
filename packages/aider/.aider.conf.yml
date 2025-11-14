@@ -1,2 +1,2 @@
 gitignore: false
-model: openai/gpt-5
+model: anthropic/claude-opus-4-1
