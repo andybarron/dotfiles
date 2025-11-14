@@ -24,3 +24,4 @@ path+=("$HOME/.local/bin")
 
 # local env overrides
 [ -f "${ZDOTDIR:-$HOME}/.$(hostname).zshenv" ] && source "${ZDOTDIR:-$HOME}/.$(hostname).zshenv"
+[ -f "${ZDOTDIR:-$HOME}/.local.zshenv" ] && source "${ZDOTDIR:-$HOME}/.local.zshenv"

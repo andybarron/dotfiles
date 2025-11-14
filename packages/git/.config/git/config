@@ -12,4 +12,4 @@
 	excludesFile = /Users/andy/.config/git/global.gitignore
 
 [include]
-	path = ~/.config/git/local.gitconfig
+	path = ~/.dotfiles/configs/git/default.gitconfig
