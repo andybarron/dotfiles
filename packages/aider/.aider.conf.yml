@@ -1,2 +1,2 @@
 gitignore: false
-model: anthropic/claude-opus-4-1
+model: ollama_chat/qwen3-coder
