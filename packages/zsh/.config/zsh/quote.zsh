@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 set -euo pipefail
 
+# TODO: better quote source
+exit 0
+
 command -v jq &>/dev/null || exit
 
 cached_quote_dir="$HOME/.cache/qotd"
