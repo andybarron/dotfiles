@@ -1,14 +1,6 @@
 {
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
   "prettier.requireConfig": false,
   "search.exclude": {
     "repos/**": true
-  },
-  "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file"
+  }
 }
