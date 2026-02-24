@@ -16,10 +16,12 @@ will print warnings on startup._
 - [`lsd`](https://github.com/lsd-rs/lsd)
 - [`nvim`](https://neovim.io/)
 - [`zoxide`](https://github.com/ajeetdsouza/zoxide)
+- [`asdf`](https://asdf-vm.com)
 
 ## Installation
 
 ```sh
-git clone --recurse-submodules -j4 git@github.com:andybarron/dotfiles.git ~/.dotfiles
-~/.dotfiles/scripts/sync && exec zsh -i
+# NOTE: If installing on a remote host: ssh `-A` flag enables SSH agent forwarding :)
+$ git clone --recurse-submodules -j4 git@github.com:andybarron/dotfiles.git ~/.dotfiles
+$ ~/.dotfiles/scripts/sync && exec zsh -i
 ```
