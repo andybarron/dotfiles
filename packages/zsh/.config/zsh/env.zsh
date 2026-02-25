@@ -21,6 +21,7 @@ path+=("$HOME/.local/bin")
 
 # homebrew binaries
 [ -d /opt/homebrew/bin ] && path=("/opt/homebrew/bin" $path)
+[ -d /home/linuxbrew/.linuxbrew/bin ] && path=("/home/linuxbrew/.linuxbrew/bin" $path)
 
 # local env overrides
 [ -f "${ZDOTDIR:-$HOME}/.$(hostname).zshenv" ] && source "${ZDOTDIR:-$HOME}/.$(hostname).zshenv"
