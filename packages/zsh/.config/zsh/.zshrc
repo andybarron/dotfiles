@@ -110,6 +110,7 @@ function zshrc::init {
   alias lalt='l -Al --tree'
 
   # other aliases
+  alias k='kubectl'
   alias grep='command grep --color=auto'
   tm() {
     tmux new -As "${1:-0}"
