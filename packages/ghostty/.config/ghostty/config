@@ -3,4 +3,4 @@ window-padding-x = 8
 window-padding-y = 8
 window-padding-balance = false
 
-shell-integration-features = sudo,ssh-terminfo,ssh-env
+shell-integration-features = sudo,ssh-env

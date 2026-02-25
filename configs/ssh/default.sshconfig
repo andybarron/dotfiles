@@ -12,6 +12,11 @@ Host tomnuc tomnuc.local
   User andy
   ForwardAgent yes
 
+Host element
+  HostName elbowchips.net
+  User andy
+  ForwardAgent yes
+
 Host *
   AddKeysToAgent yes
   IdentityFile ~/.ssh/id_ed25519
