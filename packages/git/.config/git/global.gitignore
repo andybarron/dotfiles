@@ -1,2 +1,5 @@
 .DS_Store
 .aider.*
+
+# TODO: is this a good idea?
+**/.claude/settings.local.json
