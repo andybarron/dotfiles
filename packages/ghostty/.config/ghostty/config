@@ -2,5 +2,6 @@
 window-padding-x = 8
 window-padding-y = 8
 window-padding-balance = false
+font-family = Hack Nerd Font
 
 shell-integration-features = sudo,ssh-env
