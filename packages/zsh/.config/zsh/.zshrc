@@ -45,9 +45,13 @@ function zshrc::init {
   # if we're in a vscode terminal, set editor to code wait mode.
   # we wrap code in a script because the VISUAL variable does not
   # support arguments.
-  if [[ "$TERM_PROGRAM" == "vscode" ]] && command -v code &>/dev/null; then
+  if [[ "$TERM_PROGRAM" == "vscode" ]] && zshrc::command_exists_optional code; then
     export VISUAL="$ZDOTDIR/code.zsh"
     alias v="$ZDOTDIR/code.zsh"
+  elif [[ "$TERM_PROGRAM" == "zed" ]] && zshrc::command_exists_optional zed; then
+    # same for zed
+    export VISUAL="$ZDOTDIR/zed.zsh"
+    alias v="$ZDOTDIR/zed.zsh"
   fi
 
   # set up lsd if found
