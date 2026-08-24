@@ -42,7 +42,7 @@ function zshrc::init {
     alias v=vim
   fi
 
-  # if we're in a vscode terminal, set editor to code wait mode.
+  # if we're in a vscode/zed terminal, set VISUAL to editor wait mode.
   # we wrap code in a script because the VISUAL variable does not
   # support arguments.
   if [[ "$TERM_PROGRAM" == "vscode" ]] && zshrc::command_exists_optional code; then
