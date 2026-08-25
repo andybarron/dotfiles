@@ -122,10 +122,24 @@ function zshrc::init {
     tmux new -As "$sn"
   }
   tmd() {
-    tm "$(basename "$pwd")"
+    tm "$(basename "$(pwd)")"
   }
   tmdp() {
     tm "$(pwd)"
+  }
+  zshrc::cd_fuzzy() {
+    local q="$1"
+    if [ -z "$q" ]; then
+      echo "fuzzy directory search required" >&2
+      return 1
+    fi
+    z "$q" || return 1
+  }
+  tmz() {
+    zshrc::cd_fuzzy "$1" && tmd
+  }
+  tmzp() {
+    zshrc::cd_fuzzy "$1" && tmdp
   }
 
   # set up zsh plugins
