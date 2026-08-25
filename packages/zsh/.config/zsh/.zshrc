@@ -117,7 +117,15 @@ function zshrc::init {
   alias k='kubectl'
   alias grep='command grep --color=auto'
   tm() {
-    tmux new -As "${1:-0}"
+    # escape session name
+    local sn="$(echo "${1:-0}" | sed 's/[^a-zA-Z0-9\/]/__/g')"
+    tmux new -As "$sn"
+  }
+  tmd() {
+    tm "$(basename "$pwd")"
+  }
+  tmdp() {
+    tm "$(pwd)"
   }
 
   # set up zsh plugins
