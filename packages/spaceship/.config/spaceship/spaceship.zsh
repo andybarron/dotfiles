@@ -1,7 +1,8 @@
 SPACESHIP_PROMPT_PREFIXES_SHOW=false
 
 # https://github.com/spaceship-prompt/spaceship-prompt/issues/1193
-SPACESHIP_ASYNC_SHOW=false
+# if `...` async loading icon hangs forever, add this to a local override:
+# SPACESHIP_ASYNC_SHOW=false
 
 function {
   spaceship_local_override="$HOME/.config/spaceship/spaceship.$(hostname).zsh"
