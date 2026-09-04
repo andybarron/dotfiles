@@ -82,6 +82,8 @@ function zshrc::init {
   alias gcamn='git commit --all -n --message'
   alias gcm='git commit --message'
   alias gcmn='git commit -n --message'
+  alias gcf='git commit --amend'
+  alias gcfx='git commit --amend --no-edit'
 
   alias gd='git diff'
   alias gds='git diff --staged'
