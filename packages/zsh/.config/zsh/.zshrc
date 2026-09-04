@@ -229,7 +229,13 @@ function zshrc::init {
   . "$zshrc__repos_dir/ohmyzsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 
   # load spaceship prompt
-  . "$zshrc__repos_dir/spaceship-prompt/spaceship.zsh"
+  # . "$zshrc__repos_dir/spaceship-prompt/spaceship.zsh"
+
+  # load starship prompt
+  if zshrc::command_exists starship; then
+    ZLE_RPROMPT_INDENT=0
+    eval "$(starship init zsh)"
+  fi
 
   # warn missing commands
   if [ -n "$zshrc__missing_commands" ]; then
