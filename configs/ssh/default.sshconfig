@@ -5,6 +5,11 @@
 
 # TODO: Add it automatically?
 
+Host valheim
+    HostName 5.78.66.129
+    User andy
+    ForwardAgent yes
+
 Host tomnuc
   HostName home.andybarron.net
 
