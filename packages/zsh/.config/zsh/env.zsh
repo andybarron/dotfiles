@@ -20,8 +20,8 @@ path+=("$HOME/.local/bin")
 [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
 
 # homebrew binaries
-[ -f "/opt/homebrew/bin/brew" ] && "/opt/homebrew/bin/brew" shellenv
-[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && "/home/linuxbrew/.linuxbrew/bin/brew" shellenv
+[ -f "/opt/homebrew/bin/brew" ] && eval $("/opt/homebrew/bin/brew" shellenv)
+[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval $("/home/linuxbrew/.linuxbrew/bin/brew" shellenv)
 
 # local env overrides
 [ -f "${ZDOTDIR:-$HOME}/.$(hostname).zshenv" ] && source "${ZDOTDIR:-$HOME}/.$(hostname).zshenv"
