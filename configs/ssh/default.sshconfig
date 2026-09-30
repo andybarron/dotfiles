@@ -6,9 +6,15 @@
 # TODO: Add it automatically?
 
 Host valheim
-    HostName 5.78.66.129
-    User andy
-    ForwardAgent yes
+  HostName 5.78.66.129
+  User andy
+  ForwardAgent yes
+
+Host games
+  HostName 159.223.153.234
+  Port 32010
+  User andy
+  ForwardAgent yes
 
 Host tomnuc
   HostName home.andybarron.net
