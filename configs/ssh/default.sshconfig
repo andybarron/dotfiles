@@ -11,7 +11,7 @@ Host valheim
   ForwardAgent yes
 
 Host games
-  HostName 159.223.153.234
+  HostName 137.184.115.179
   Port 32010
   User andy
   ForwardAgent yes
