@@ -4,9 +4,6 @@
 [submodule "repos/zsh-completions"]
 	path = repos/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
-[submodule "repos/zsh-autocomplete"]
-	path = repos/zsh-autocomplete
-	url = https://github.com/marlonrichert/zsh-autocomplete
 [submodule "repos/ohmyzsh"]
 	path = repos/ohmyzsh
 	url = https://github.com/ohmyzsh/ohmyzsh
