@@ -177,7 +177,10 @@ function zshrc::init {
   zstyle ':completion:*' list-prompt ''
   zstyle ':completion:*' select-prompt ''
 
-  # ! Disabled because it's buggy nonsense (psql was freezing entire terminal, wtf?)
+  zstyle ':completion:*' hosts off
+  zstyle ':autocomplete:*:psql:*' list-choices false
+
+  # TEMPORARY: https://github.com/marlonrichert/zsh-autocomplete/pull/903
   # # zsh autocomplete (interactive drop-down completions)
   # # https://github.com/marlonrichert/zsh-autocomplete
   # # "near the top, before any calls to compinit"
@@ -186,6 +189,11 @@ function zshrc::init {
   # # calls compinit, so should be after fpath modifications:
   # # https://www.reddit.com/r/zsh/comments/gk2c91/comment/kpjmntg
   # . "$zshrc__repos_dir/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+
+  # TEMPORARY: https://github.com/marlonrichert/zsh-autocomplete/pull/903
+  # ! enable if zsh-autocomplete is disabled above
+  autoload -Uz compinit
+  compinit -C
 
   # load zoxide
   # must be after compinit for completions to work
